@@ -1,0 +1,1 @@
+{"version":3,"sources":["app.scss"],"names":[],"mappings":"AAKA;EACE,iCAJmC;EAKnC,YAJkB,EAEd","file":"app.css","sourcesContent":["// @import \"node_modules/bootstrap-sass/assets/stylesheets/bootstrap\";\n\n$font-stack:    Helvetica, sans-serif;\n$primary-color: #333;\n\nbody {\n  font: 100% $font-stack;\n  color: $primary-color;\n}"],"sourceRoot":"/source/"}
