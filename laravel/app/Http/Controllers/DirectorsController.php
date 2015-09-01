@@ -10,7 +10,7 @@ class DirectorsController extends Controller
 {
 
 
-    public function index(){
+    public function index($ville = "Lyon"){
 
         return view('Directors/index');
     }

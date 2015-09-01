@@ -1,17 +1,22 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Mentions légales</title>
+@extends('layout')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('title')
+    Mentions légales
+@endsection
+
+@section('breadcrumb')
+    <li><a href="#">Home</a></li>
+    <li class="active"><a href="#">Mentions légales</a></li>
+@endsection
+
+@section('content')
 
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <div class="title">Mentions légales</div>
-            </div>
-        </div>
-    </body>
-</html>
+
+
+
+
+
+
+
+@endsection

@@ -1,17 +1,14 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Lire film</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@extends('layout')
 
+@section('title')
+    Lire film
+@endsection
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <h1>Lire film {{ $id }}</h1>
-            </div>
-        </div>
-    </body>
-</html>
+@section('content')
+
+    <div class="content">
+        <h1>Lire film {{ $id }}</h1>
+    </div>
+
+@endsection

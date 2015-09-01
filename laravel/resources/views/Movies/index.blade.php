@@ -1,17 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Liste des films</title>
+@extends('layout')
 
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@section('title')
+    <i class="fa fa-bars"></i>&nbsp;&nbsp;Liste des films
+@endsection
 
+@section('breadcrumb')
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Film</a></li>
+    <li class="active"><a href="#">Index</a></li>
+@endsection
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <h1>Liste des films</h1>
-            </div>
-        </div>
-    </body>
-</html>
+@section('content')
+
+    <div class="content">
+        <h1>Liste des films</h1>
+    </div>
+
+@endsection

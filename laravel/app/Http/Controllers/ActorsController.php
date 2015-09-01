@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Actors;
 
 /**
  * Class DirectorsController
@@ -12,18 +13,7 @@ class ActorsController extends Controller
 
     public function index(){
         $datas = [
-            'acteurs' => [
-                ['nom' => 'Bob'     , 'prenom' => 'Marley'  , 'age' => 25],
-                ['nom' => 'Cage'    , 'prenom' => 'Nicolas' , 'age' => 42],
-                ['nom' => 'Russel'  , 'prenom' => 'Crow'    , 'age' => 37]
-            ],
-            'title' => "Liste des acteurs",
-            'noms'  => [ 'Bob', 'Nicolas', 'Russel' ],
-            'age'   => [   25 ,    42    ,    37    ],
-            'localite' => [
-                'Paris' => [ 'Bob' , 'Russel'],
-                'Lyon'  => [ 'Nicolas' ]
-            ]
+            "actors" => Actors::all()
         ];
 
         return view('Actors/index', $datas);

@@ -12,6 +12,14 @@ class PagesController extends Controller
     /**
      * Page 'Contact'
      */
+    public function welcome(){
+
+        return view('Pages/welcome');
+    }
+
+    /**
+     * Page 'Contact'
+     */
     public function contact(){
 
         return view('Pages/Contact');

@@ -10,7 +10,7 @@ class MoviesController extends Controller
 {
 
 
-    public function index(){
+    public function index($annee = 2015){
 
         return view('Movies/index');
     }
@@ -35,6 +35,13 @@ class MoviesController extends Controller
     public function delete($id){
 
         return redirect('movies/index', ['id' => $id]);
+    }
+
+    public function search($langue = "fr", $visibilite = 1, $duree = 2){
+
+        return view('Movies/search', [  'langue'     => $langue,
+                                        'visibilite' => $visibilite,
+                                        'duree'      => $duree]);
     }
 
 

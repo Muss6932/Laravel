@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Modifier</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@extends('layout')
 
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <h1>Modifier acteur {{ $id }}</h1>
-            </div>
-        </div>
-    </body>
-</html>
+
+@section('title')
+    <i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier l'acteur
+@endsection
+
+
+
+@section('breadcrumb')
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li><a href="{{route('actors.index')}}">Acteurs</a></li>
+    <li class="active"><a href="{{route('actors.update')}}">Modifier</a></li>
+@endsection
+
+
+
+@section('content')
+
+@endsection

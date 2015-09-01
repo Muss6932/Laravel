@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Lire</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@extends('layout')
 
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <h1>Lire acteur {{ $id }}</h1>
-            </div>
-        </div>
-    </body>
-</html>
+
+@section('title')
+    <i class="fa fa-star"></i>&nbsp;&nbsp;Information sur l'acteur
+@endsection
+
+
+
+@section('breadcrumb')
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li><a href="{{route('actors.index')}}">Acteurs</a></li>
+    <li class="active"><a href="{{route('actors.read')}}">Information</a></li>
+@endsection
+
+
+
+@section('content')
+
+@endsection
