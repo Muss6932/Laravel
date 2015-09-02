@@ -1,13 +1,21 @@
 @extends('layout')
 
+
+
 @section('title')
-    Modifier Réalisateur
+    <i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier le réalisateur
 @endsection
 
-@section('content')
 
-    <div class="content">
-        <h1>Modifier Réalisateur {{ $id }}</h1>
-    </div>
+
+@section('breadcrumb')
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li><a href="{{route('directors.index')}}">Réalisateur</a></li>
+    <li class="active"><a href="{{route('directors.update')}}">Modifier</a></li>
+@endsection
+
+
+
+@section('content')
 
 @endsection

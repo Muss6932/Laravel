@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Recherche films</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@extends('layout')
 
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <h1>Recherche film</h1>
-                <p>Vous recherchez un film en {{$langue}} avec une visibilité de {{$visibilite}} et une duréé de {{$duree}}</p>
-            </div>
-        </div>
-    </body>
-</html>
+
+@section('title')
+    <i class="fa fa-search"></i>&nbsp;&nbsp;Rechercher dans 'film'
+@endsection
+
+
+
+@section('breadcrumb')
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li><a href="{{route('movies.index')}}">Films</a></li>
+    <li class="active"><a href="{{route('movies.search')}}">Recherche</a></li>
+@endsection
+
+
+
+@section('content')
+
+@endsection

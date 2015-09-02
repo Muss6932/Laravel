@@ -58,7 +58,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>&nbsp;&nbsp;Utilisateur</a>
                         <ul class="dropdown-menu">
-                            <li><a href="#"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les utilisateurs</a></li>
+                            <li><a href="{{route('users.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les utilisateurs</a></li>
                             <li><a href="#"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un utilisateur</a></li>
                         </ul>
                     </li>

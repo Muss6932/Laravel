@@ -11,7 +11,7 @@
 
 
 @section('title')
-    <i class="fa fa-bars"></i>&nbsp;&nbsp;Liste des catégories
+    <i class="fa fa-book"></i>&nbsp;&nbsp;Ma catégories
 @endsection
 
 

@@ -13,4 +13,9 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('footer.sass');
+
+    mix.scripts([
+     "searchtable.js"
+    ]);
+
 });

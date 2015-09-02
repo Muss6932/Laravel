@@ -20,18 +20,9 @@
 
 @section('content')
 
-    <script>
-    init.push(function () {
-        $('#jq-datatables-example').dataTable();
-        $('#jq-datatables-example_wrapper .table-caption').text('Some header text');
-        $('#jq-datatables-example_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
-    });
-    </script>
+
 
     <div class="panel">
-        <div class="panel-heading">
-            <span class="panel-title">Tableau des acteurs</span>
-        </div>
         <div class="panel-body">
             <div class="table-primary">
                 <div role="grid" id="jq-datatables-example_wrapper" class="dataTables_wrapper form-inline no-footer">
@@ -39,19 +30,25 @@
                     <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable no-footer" id="jq-datatables-example" aria-describedby="jq-datatables-example_info">
                         <thead>
                         <tr role="row">
-                            <th class="sorting_asc" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column ascending" style="width: 193px;">Prénom</th>
-                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 286px;">Nom</th>
-                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 260px;">Date de naissance</th>
-                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Engine version: activate to sort column ascending" style="width: 163px;">Ville</th>
+                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 10%;">Image </th>
+                            <th class="sorting_asc" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column ascending" style="width: 193px;">Nom</th>
+                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 80px;">Naissance</th>
+                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 150px;">Ville</th>
+                            <th style="width: 10%;"> </th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($actors as $actor)
                             <tr class="gradeA odd">
-                                <td class="sorting_1">{{ $actor->firstname }}</td>
-                                <td>{{ $actor->lastname }}</td>
+                                <td><a href="{{ route('actors.read', [ 'id' => $actor->id ] ) }}"><img style="width: 100%" src="{{ $actor->image }}" alt=""></a></td>
+                                <td class="sorting_1" style="font-weight: bold; color: #090E0F"><a href="{{ route('actors.read', [ 'id' => $actor->id ] ) }}">{{ $actor->firstname }} {{ $actor->lastname }}</a></td>
                                 <td>{{ $actor->dob }}</td>
                                 <td class="center">{{ $actor->city }}</td>
+                                <td>
+                                    <a href="{{ route('actors.update', [ 'id' => $actor->id ] ) }}"><button type="button" style="width: 100%" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier</button>
+                                    </a>
+                                    <a href="{{ route('actors.delete', [ 'id' => $actor->id ] ) }}"><button type="button" style="width: 100%" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer</button>
+                                    </a></td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -59,6 +56,7 @@
             </div>
         </div>
     </div>
+
 
 @endsection
 

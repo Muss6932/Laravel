@@ -1,12 +1,12 @@
 @extends('layout')
 
 @section('title')
-    F.A.Q.
+    <i class="fa fa-question"></i>&nbsp;&nbsp;F.A.Q.
 @endsection
 
 @section('breadcrumb')
-    <li><a href="#">Home</a></li>
-    <li class="active"><a href="#">F.A.Q.</a></li>
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li class="active"><a href="{{route('faq')}}">F.A.Q.</a></li>
 @endsection
 
 @section('content')

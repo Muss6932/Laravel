@@ -1,19 +1,76 @@
 @extends('layout')
 
+
+
+
 @section('title')
     <i class="fa fa-bars"></i>&nbsp;&nbsp;Liste des films
 @endsection
 
+
+
+
 @section('breadcrumb')
-    <li><a href="#">Home</a></li>
-    <li><a href="#">Film</a></li>
-    <li class="active"><a href="#">Index</a></li>
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li class="active"><a href="{{route('movies.index')}}">Films</a></li>
 @endsection
+
+
+
 
 @section('content')
 
-    <div class="content">
-        <h1>Liste des films</h1>
-    </div>
+    <div class="panel">
+        <div class="panel-body">
+            <div class="table-primary">
+                <div role="grid" id="jq-datatables-example_wrapper" class="dataTables_wrapper form-inline no-footer">
+
+                    <table cellpadding="0" cellspacing="0" border="0"
+                           class="table table-striped table-bordered dataTable no-footer" id="jq-datatables-example"
+                           aria-describedby="jq-datatables-example_info">
+                        <thead>
+                        <tr role="row">
+                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
+                                colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 15%;">
+                                Image
+                            </th>
+                            <th class="sorting_asc" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
+                                colspan="1" aria-sort="ascending"
+                                aria-label="Rendering engine: activate to sort column ascending" style="width: 193px;">
+                                Film
+                            </th>
+                            <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
+                                colspan="1" aria-label="Browser: activate to sort column ascending"
+                                style="width: 80px;">Synopsis
+                            </th>
+                            <th style="width: 10%;"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($movies as $movie)
+                            <tr class="gradeA odd">
+                                <td><a href="{{ route('movies.read', [ 'id' => $movie->id ] ) }}"><img
+                                                style="width: 100%" src="{{ $movie->image }}" alt=""></a></td>
+                                <td  style="font-weight: bold; color: #090E0F"><a
+                                            href="{{ route('movies.read', [ 'id' => $movie->id ] ) }}">{{ $movie->title }}</a>
+                                </td>
+                                <td>{{ $movie->synopsis }}</td>
+                                <td>
+                                    <a href="{{ route('movies.update', [ 'id' => $movie->id ] ) }}">
+                                        <button type="button" style="width: 100%" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier
+                                        </button>
+                                    </a>
+                                    <a href="{{ route('movies.delete', [ 'id' => $movie->id ] ) }}">
+                                    <button type="button" style="width: 100%" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer
+                                    </button>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
 @endsection

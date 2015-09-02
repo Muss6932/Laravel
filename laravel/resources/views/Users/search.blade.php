@@ -1,18 +1,21 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Recherche utilisateur</title>
-
-        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+@extends('layout')
 
 
-    </head>
-    <body>
-        <div class="container">
-            <div class="content">
-                <h1>Recherche utilisateur</h1>
-                <p>Vous recherchez un utilisateur {{$visible}} de {{$ville}} département {{$zipcode}}</p>
-            </div>
-        </div>
-    </body>
-</html>
+
+@section('title')
+    <i class="fa fa-search"></i>&nbsp;&nbsp;Rechercher dans 'utilisateur'
+@endsection
+
+
+
+@section('breadcrumb')
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li><a href="{{route('users.index')}}">Utilisateurs</a></li>
+    <li class="active"><a href="{{route('users.search')}}">Recherche</a></li>
+@endsection
+
+
+
+@section('content')
+
+@endsection

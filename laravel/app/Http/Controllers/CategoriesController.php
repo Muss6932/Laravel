@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Categories;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class CategoriesController
@@ -11,8 +13,11 @@ class CategoriesController extends Controller
 
 
     public function getIndex(){
+        $datas = [
+            "categories" => Categories::all()
+        ];
 
-        return view('Categories/index');
+        return view('Categories/index', $datas);
     }
 
     public function getCreate(){
@@ -32,9 +37,13 @@ class CategoriesController extends Controller
         return view('Categories/update');
     }
 
-    public function getDelete(){
+    public function getDelete($id){
+        $categorie = Categories::find($id);
+        $categorie->delete();
 
-        return redirect('categories/index');
+        Session::flash('success', "La catégorie {$categorie->title} a bien été supprimé. ");
+
+        return Redirect::route('categories.index');
     }
 
 

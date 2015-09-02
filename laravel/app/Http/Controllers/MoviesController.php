@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Movies;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class DirectorsController
@@ -10,9 +13,12 @@ class MoviesController extends Controller
 {
 
 
-    public function index($annee = 2015){
+    public function index(){
+        $datas = [
+            'movies' => Movies::all()
+        ];
 
-        return view('Movies/index');
+        return view('Movies/index', $datas);
     }
 
     public function create(){
@@ -21,9 +27,12 @@ class MoviesController extends Controller
     }
 
 
-    public function read($id){
+    public function read($id = null){
+        $datas = [
+            'movie' => Movies::find($id)
+        ];
 
-        return view('Movies/read', ['id' => $id]);
+        return view('Movies/read', $datas);
     }
 
 
@@ -33,8 +42,10 @@ class MoviesController extends Controller
     }
 
     public function delete($id){
+        $movie = Movies::find($id);
+        $movie->delete();
 
-        return redirect('movies/index', ['id' => $id]);
+        return Redirect::route('movies.index');
     }
 
     public function search($langue = "fr", $visibilite = 1, $duree = 2){

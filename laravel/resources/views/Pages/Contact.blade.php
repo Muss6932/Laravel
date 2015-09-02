@@ -1,12 +1,12 @@
 @extends('layout')
 
 @section('title')
-    Contact
+    <i class="fa fa-envelope"></i>&nbsp;&nbsp;Contact
 @endsection
 
 @section('breadcrumb')
-    <li><a href="#">Home</a></li>
-    <li class="active"><a href="#">Contact</a></li>
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li class="active"><a href="{{route('contact')}}">Contact</a></li>
 @endsection
 
 @section('content')

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Users;
 
 /**
  * Class DirectorsController
@@ -10,8 +11,11 @@ class UsersController extends Controller
 {
 
     public function getIndex() {
+        $datas = [
+            'users' => Users::all()
+        ];
 
-        return view('Users/index');
+        return view('Users/index', $datas);
     }
 
     public function search($visible = 1, $ville = null, $zipcode = null){

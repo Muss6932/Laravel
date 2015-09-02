@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Model\Directors;
+use Illuminate\Support\Facades\Redirect;
 
 /**
  * Class DirectorsController
@@ -10,9 +12,12 @@ class DirectorsController extends Controller
 {
 
 
-    public function index($ville = "Lyon"){
+    public function index(){
+        $datas = [
+            "directors" => Directors::all()
+        ];
 
-        return view('Directors/index');
+        return view('Directors/index', $datas);
     }
 
     public function create(){
@@ -21,9 +26,12 @@ class DirectorsController extends Controller
     }
 
 
-    public function read($id){
+    public function read($id = null){
+        $datas = [
+            "director" => Directors::find($id)
+        ];
 
-        return view('Directors/read', ['id' => $id]);
+        return view('Directors/read', $datas);
     }
 
 
@@ -33,8 +41,10 @@ class DirectorsController extends Controller
     }
 
     public function delete($id){
+        $director = Directors::find($id);
+        $director->delete();
 
-        return redirect('directors/index', ['id' => $id]);
+        return Redirect::route('directors.index');
     }
 
 

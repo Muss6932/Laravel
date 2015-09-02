@@ -301,13 +301,9 @@
     <ul class="breadcrumb breadcrumb-page">
         <div class="breadcrumb-label text-light-gray">You are here: </div>
 
-
-
     @section('breadcrumb')
         <li class="active"><a href="#">Home</a></li>
     @show
-
-
 
     </ul>
 
@@ -322,6 +318,18 @@
 
         </div>
     </div> <!-- / .page-header -->
+
+
+
+
+
+
+
+
+{{--J'inclus mon message d'error ou autre si il existe--}}
+    @include(('Partials/_flashdatas'))
+
+
 
 
 
@@ -363,6 +371,7 @@
 <!-- Pixel Admin's javascripts -->
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/pixel-admin.min.js')}}"></script>
+<script src="{{asset('js/all.js')}}"></script>
 
 <script type="text/javascript">
     init.push(function () {

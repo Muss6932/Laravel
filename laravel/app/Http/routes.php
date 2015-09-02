@@ -79,7 +79,8 @@ Route::group(['prefix' => 'actors', 'as' => 'actors'], function() {
     /*
      * Route pour la page 'Delete'
      */
-    Route::get('/delete/{id}', ['uses' => 'ActorsController@delete'])
+    Route::get('/delete/{id}', ['uses' => 'ActorsController@delete',
+                                'as'   => '.delete'])
     ->where('id', '[0-9]+');
 });
 
@@ -119,7 +120,8 @@ Route::group(['prefix' => 'directors', 'as' => 'directors'], function() {
     /*
     | Route pour la page 'Delete'
     */
-    Route::get('/delete/{id}', ['uses' => 'DirectorsController@delete'])
+    Route::get('/delete/{id}', ['uses' => 'DirectorsController@delete',
+                                'as'   => '.delete'])
     ->where('id', '[0-9]+');
 });
 
@@ -160,7 +162,8 @@ Route::group(['prefix' => 'movies'], function() {
     /*
     | Route pour la page 'Delete'
     */
-    Route::get('/delete/{id}', ['uses' => 'MoviesController@delete'])
+    Route::get('/delete/{id}', ['uses' => 'MoviesController@delete',
+                                'as'   => 'movies.delete'])
     ->where('id', '[0-9]+');
 
     /*
@@ -193,7 +196,7 @@ Route::group(['prefix' => 'users'], function() {
  * Routing implicit
  * ou le préfix sera users et le controlleur et mes routes seront devinés
  */
-Route::controller('users', 'UsersController');
+Route::controller('users', 'UsersController', [ 'getIndex' => 'users.index']);
 
 
 /*
@@ -205,7 +208,8 @@ Route::controller('users', 'UsersController');
 Route::controller('categories', 'CategoriesController', [ 'getIndex'   => 'categories.index',
                                                           'getCreate'  => 'categories.create',
                                                           'getRead'    => 'categories.read',
-                                                          'getUpdate'  => 'categories.update']);
+                                                          'getUpdate'  => 'categories.update',
+                                                          'getDelete'  => 'categories.delete']);
 
 
 
@@ -215,7 +219,11 @@ Route::controller('categories', 'CategoriesController', [ 'getIndex'   => 'categ
 |------------------------------------------------------------------------
 */
 
-Route::controller('cinema', 'CinemaController');
+Route::controller('cinemas', 'CinemasController', [ 'getIndex'  => 'cinemas.index',
+                                                    'getCreate' => 'cinemas.create',
+                                                    'getRead'   => 'cinemas.read',
+                                                    'getUpdate' => 'cinemas.update',
+                                                    'getDelete' => 'cinemas.delete']);
 
 
 

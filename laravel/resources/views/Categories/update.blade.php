@@ -12,7 +12,7 @@
 
 
 @section('title')
-    Modifier la catégorie
+    <i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier la catégorie
 @endsection
 
 

@@ -1,13 +1,24 @@
 @extends('layout')
 
+
+
+
 @section('title')
-    Ajouter un réalisateur
+    <i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un réalisateur
 @endsection
 
-@section('content')
 
-    <div class="content">
-        <h1>Ajouter un réalisateur</h1>
-    </div>
+
+
+@section('breadcrumb')
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li><a href="{{route('directors.index')}}">Réalisateur</a></li>
+    <li class="active"><a href="{{route('directors.create')}}">Ajouter</a></li>
+@endsection
+
+
+
+
+@section('content')
 
 @endsection

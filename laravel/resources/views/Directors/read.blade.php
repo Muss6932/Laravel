@@ -1,13 +1,21 @@
 @extends('layout')
 
+
+
 @section('title')
-    Réalisateurs
+    <i class="fa fa-video-camera"></i>&nbsp;&nbsp;Information sur le réalisateur
 @endsection
 
-@section('content')
 
-    <div class="content">
-        <h1>Réalisateurs</h1>
-    </div>
+
+@section('breadcrumb')
+    <li><a href="{{route('welcome')}}">Home</a></li>
+    <li><a href="{{route('directors.index')}}">Réalisateurs</a></li>
+    <li class="active"><a href="{{route('directors.read')}}">Information</a></li>
+@endsection
+
+
+
+@section('content')
 
 @endsection
