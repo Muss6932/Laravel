@@ -45,10 +45,9 @@
                                 <td>{{ $actor->dob }}</td>
                                 <td class="center">{{ $actor->city }}</td>
                                 <td>
-                                    <a href="{{ route('actors.update', [ 'id' => $actor->id ] ) }}"><button type="button" style="width: 100%" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier</button>
-                                    </a>
-                                    <a href="{{ route('actors.delete', [ 'id' => $actor->id ] ) }}"><button type="button" style="width: 100%" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer</button>
-                                    </a></td>
+                                    <a href="{{ route('actors.update', [ 'id' => $actor->id ] ) }}" style="width: 100%" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier</a>
+                                    <a href="{{ route('actors.delete', [ 'id' => $actor->id ] ) }}" style="width: 100%" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

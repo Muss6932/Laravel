@@ -48,7 +48,7 @@
                                 colspan="1" aria-label="Platform(s): activate to sort column ascending"
                                 style="width: 150px;">Biographie
                             </th>
-                            <th style="width: 21%;"></th>
+                            <th style="width: 10%;"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -62,14 +62,8 @@
                                 <td>{{ $director->dob }}</td>
                                 <td class="center">{{ $director->biography }}</td>
                                 <td>
-                                    <a href="{{ route('directors.update', [ 'id' => $director->id ] ) }}">
-                                        <button type="button" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier
-                                        </button>
-                                    </a>
-                                    <a href="{{ route('directors.delete', [ 'id' => $director->id ] ) }}">
-                                        <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer
-                                        </button>
-                                    </a></td>
+                                    <a href="{{ route('directors.update', [ 'id' => $director->id ] ) }}" style="width: 100%;" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier</a>
+                                    <a href="{{ route('directors.delete', [ 'id' => $director->id ] ) }}" style="width: 100%;" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer</a></td>
                             </tr>
                         @endforeach
                         </tbody>

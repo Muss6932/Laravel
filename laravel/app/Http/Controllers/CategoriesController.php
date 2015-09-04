@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Model\Categories;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class CategoriesController
@@ -14,7 +15,8 @@ class CategoriesController extends Controller
 
     public function getIndex(){
         $datas = [
-            "categories" => Categories::all()
+            "categories" => Categories::all(),
+            "maxMovies"  => $this->maxMovies()
         ];
 
         return view('Categories/index', $datas);
@@ -46,6 +48,15 @@ class CategoriesController extends Controller
         return Redirect::route('categories.index');
     }
 
+//-----------------------------------------------------------------------------------------------------------
+//                  REQUETE
+//-----------------------------------------------------------------------------------------------------------
+
+    public function maxMovies()
+    {
+
+
+    }
 
 
 

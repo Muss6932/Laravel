@@ -135,9 +135,8 @@ Route::group(['prefix' => 'movies'], function() {
     /*
     | Route pour la page 'Index'
     */
-    Route::get('/index/{annee?}', ['uses' => 'MoviesController@index',
-                                    'as'  => 'movies.index'])
-    ->where('annee', '[0-9]{4}');
+    Route::get('/index/{column?}/{value?}', ['uses' => 'MoviesController@index',
+                                                'as'  => 'movies.index']);
 
     /*
     | Route pour la page 'Create'
@@ -160,7 +159,7 @@ Route::group(['prefix' => 'movies'], function() {
     ->where('id', '[0-9]+');
 
     /*
-    | Route pour la page 'Delete'
+    | Route pour 'Delete'
     */
     Route::get('/delete/{id}', ['uses' => 'MoviesController@delete',
                                 'as'   => 'movies.delete'])
@@ -172,6 +171,21 @@ Route::group(['prefix' => 'movies'], function() {
     Route::get('/search/{langue?}/{visibilite?}/{duree?}', ['uses' => 'MoviesController@search',
                                                             'as'   => 'movies.search'])
         ->where(array('langue' => 'fr|en|us', 'visibilite' => '1|2', 'duree' => '[0-9]{1,2}'));
+
+    /*
+    | Route pour 'Activate'
+    */
+    Route::get('/activation/{id}/{activate}/{value}' , ['uses' => 'MoviesController@activate',
+                                                        'as'   => 'movies.activate'])
+        ->where('id', '[0-9]+');
+
+    /*
+    | Route pour 'Select'
+    */
+    Route::get('/select', ['uses' => 'MoviesController@select',
+                                   'as' => 'movies.select']);
+
+
 });
 
 
@@ -196,7 +210,11 @@ Route::group(['prefix' => 'users'], function() {
  * Routing implicit
  * ou le préfix sera users et le controlleur et mes routes seront devinés
  */
-Route::controller('users', 'UsersController', [ 'getIndex' => 'users.index']);
+Route::controller('users', 'UsersController', [ 'getIndex' => 'users.index',
+                                                'getCreate' => 'users.create',
+                                                'getRead' => 'users.read',
+                                                'getUpdate' => 'users.update',
+                                                'getDelete' => 'users.delete']);
 
 
 /*
@@ -226,5 +244,11 @@ Route::controller('cinemas', 'CinemasController', [ 'getIndex'  => 'cinemas.inde
                                                     'getDelete' => 'cinemas.delete']);
 
 
+/*
+|------------------------------------------------------------------------
+|           Search
+|------------------------------------------------------------------------
+*/
 
+Route::get('/search', ['uses' => 'PagesController@search', 'as' => 'search']);
 

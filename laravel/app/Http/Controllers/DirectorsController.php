@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Model\Directors;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 /**
  * Class DirectorsController
@@ -43,6 +44,9 @@ class DirectorsController extends Controller
     public function delete($id){
         $director = Directors::find($id);
         $director->delete();
+
+        Session::flash('success', "Le réalisateur {$director->firstname} {$director->lastname} a bien été supprimé. ");
+
 
         return Redirect::route('directors.index');
     }

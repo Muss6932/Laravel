@@ -56,10 +56,18 @@
                         </ul>
                     </li>
                     <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ticket"></i>&nbsp;&nbsp;Cinéma</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{route('cinemas.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les
+                                    cinémas</a></li>
+                            <li><a href="{{route('cinemas.create')}}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un cinéma</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>&nbsp;&nbsp;Utilisateur</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('users.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les utilisateurs</a></li>
-                            <li><a href="#"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un utilisateur</a></li>
+                            <li><a href="{{route('users.create')}}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un utilisateur</a></li>
                         </ul>
                     </li>
                 </ul> <!-- / .navbar-nav -->

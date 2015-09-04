@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Http\Request;
 
 /**
  * Class PagesController
@@ -40,4 +41,26 @@ class PagesController extends Controller
 
         return view('Pages/faq');
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        // Récupere de manière sécurisé la valeur de mon input
+        // dont le name est 'title
+        $title = $request->input('title');
+        $language = $request->input('language');
+        $bo = $request->input('bo');
+        $cover = $request->input('checkbox');
+
+        dump($title);
+        dump($language);
+        dump($bo);
+        dump($cover);
+
+        return view('Pages/search');
+    }
+
 }

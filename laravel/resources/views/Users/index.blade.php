@@ -48,15 +48,24 @@
                                 colspan="1" aria-label="Platform(s): activate to sort column ascending"
                                 style="width: 150px;">Ville
                             </th>
+                            <th style="width: 10%;"></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($users as $user)
                             <tr class="gradeA odd">
-                                <td><img style="width: 100%" src="{{ $user->image }}" alt=""></td>
-                                <td class="sorting_1" style="font-weight: bold; color: #090E0F">{{ $user->username }} </td>
+
+                                <td><a href="{{ route('users.read', [ 'id' => $user->id ] ) }}"><img
+                                                style="width: 100%" src="{{ $user->image }}" alt=""></a></td>
+                                <td style="font-weight: bold; color: #090E0F"><a
+                                            href="{{ route('users.read', [ 'id' => $user->id ] ) }}">{{ $user->username }}</a>
+                                </td>
                                 <td>{{ $user->email }}</td>
                                 <td class="center">{{ $user->ville }}</td>
+                                <td>
+                                    <a href="{{ route('users.update', [ 'id' => $user->id ] ) }}" style="width: 100%" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier</a>
+                                    <a href="{{ route('users.delete', [ 'id' => $user->id ] ) }}" style="width: 100%" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

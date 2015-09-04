@@ -38,6 +38,7 @@
                                 aria-label="Rendering engine: activate to sort column ascending" style="width: 193px;">
                                 Adresse
                             </th>
+                            <th style="width: 10%;"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -45,6 +46,10 @@
                             <tr class="gradeA odd">
                                 <td class="sorting_1" style="font-weight: bold; color: #090E0F">{{ $salle->title }}</td>
                                 <td>{{ $salle->adresse }} {{ $salle->cp }} {{ $salle->ville }} </td>
+                                <td>
+                                    <a href="{{ route('cinemas.update', [ 'id' => $salle->id ] ) }}" style="width: 100%;" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier</a>
+                                    <a href="{{ route('cinemas.delete', [ 'id' => $salle->id ] ) }}" style="width: 100%;" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer</a>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>

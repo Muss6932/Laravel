@@ -19,6 +19,7 @@
     <link href="{{asset('css/rtl.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('css/themes.min.css')}}" rel="stylesheet" type="text/css">
     <link href="{{asset('css/footer.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
 
     <!--[if lt IE 9]>
     <script src="{{asset('js/ie.min.js')}}"></script>

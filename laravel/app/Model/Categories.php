@@ -13,4 +13,10 @@ class Categories extends Model {
 
 
 
+    public function movies(){
+
+        return $this->hasMany('App\Model\Movies');
+    }
+
+
 }
