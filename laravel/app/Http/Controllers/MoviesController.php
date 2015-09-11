@@ -1,12 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\MoviesRequest;
+use App\Model\Actors;
+use App\Model\Categories;
+use App\Model\Comments;
+use App\Model\Directors;
 use App\Model\Movies;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use Zend\I18n\Validator\DateTime;
 
 
 /**
@@ -44,13 +48,29 @@ class MoviesController extends Controller
 
     public function create(){
 
-        return view('Movies/create');
+        $datas = [
+            'categories' => $this->categories(),
+            'actors' => $this->actors(),
+            'directors' => $this->directors()
+
+        ];
+
+        return view('Movies/create', $datas);
     }
 
 
+
+
     public function read($id = null){
+        $movie = Movies::find($id);
+
+        if (!$movie) {
+            abort(404);
+        }
+
+
         $datas = [
-            'movie' => Movies::find($id)
+            'movie' => $movie
         ];
 
         return view('Movies/read', $datas);
@@ -112,7 +132,7 @@ class MoviesController extends Controller
      * @param Request $request
      * @return mixed
      */
-    public function Select(Request $request)
+    public function select(Request $request)
     {
 
         $movies = $request->input('selectFilm');
@@ -127,7 +147,7 @@ class MoviesController extends Controller
                     $movie = Movies::find($id);
                     $movie->delete();
                 }
-                Session::flash('success', "Le ou les films ont bien été supprimé. ");
+                Session::flash('success', "Les films ont bien été supprimé. ");
             } elseif ($submit == 'activer') {
                 foreach ($movies as $id) {
                     $movie = Movies::find($id);
@@ -149,8 +169,11 @@ class MoviesController extends Controller
             }
 
 
-            return Redirect::route('movies.index');
         }
+
+        return Redirect::route('movies.index');
+
+
     }
 
 
@@ -206,5 +229,163 @@ class MoviesController extends Controller
         return $countMoviesInactive;
     }
 
+
+// Requête pour create
+
+    public function categories()
+    {
+        $categories = Categories::all();
+
+        return $categories;
+    }
+
+    public function actors()
+    {
+        $actors = Actors::all();
+
+        return $actors;
+    }
+
+    public function directors()
+    {
+        $directors = Directors::all();
+
+        return $directors;
+    }
+
+
+
+//------------------------------------------------------------------------------------------------------------
+//              STORE
+//------------------------------------------------------------------------------------------------------------
+
+
+    public function store(MoviesRequest $request)
+    {
+        $movie = new Movies();
+        $movie->title           = $request->title;
+        $movie->type_film       = $request->type_film;
+        $movie->synopsis        = $request->synopsis;
+        $movie->description     = $request->description;
+        $movie->trailer         = $request->trailer;
+        $movie->categories_id   = $request->categories;
+        $movie->visible         = $request->visible;
+        $movie->cover           = $request->cover;
+
+        //------------------------------------------------
+        // Pour les images :
+
+        $filename = "";
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+
+            $destinationPath = public_path() . '/uploads/movies/';
+            $file->move($destinationPath, $filename);
+        }
+
+        $movie->image = asset('uploads/movies/' . $filename);
+
+        //------------------------------------------------
+
+        $movie->save();
+
+        //------------------------------------------------
+
+
+
+        if($request->moviesActors != null){
+            foreach ($request->moviesActors as $actorId) {
+                echo $actorId;
+                DB::table('actors_movies')->insert(
+                    ['actors_id' => $actorId,
+                        'movies_id' => $movie->id]
+                );
+
+            }
+        }
+
+
+        //------------------------------------------------
+
+        if ($request->moviesDirectors != null) {
+            foreach ($request->moviesDirectors as $DirectorId) {
+                echo $DirectorId;
+                DB::table('directors_movies')->insert([
+                        'directors_id' => $DirectorId,
+                        'movies_id' => $movie->id
+                    ]);
+            }
+        }
+
+        //------------------------------------------------
+
+
+        Session::flash('success', "Le film {$movie->title}  a bien été ajouté.");
+
+        return Redirect::route('movies.index');
+    }
+
+
+//------------------------------------------------------------------------------------------------------------
+//              TRASH
+//------------------------------------------------------------------------------------------------------------
+
+    public function trash(){
+
+        $movies = Movies::onlyTrashed()->get();
+        // prendre que les films qui ont été supprimés
+
+        $datas = [
+            "movies"    => $movies,
+            'column' => null,
+            'value' => null,
+            'budgetAnnee' => $this->budgetAnnee(),
+            'countMovies' => $this->countMovies(),
+            'countMoviesInCover' => $this->countMoviesInCover(),
+            'countMoviesTomorrow' => $this->countMoviesTomorrow(),
+            'countMoviesInactive' => $this->countMoviesInactive()
+        ];
+
+        return view('Movies/index', $datas);
+
+    }
+
+
+//------------------------------------------------------------------------------------------------------------
+//              RESTORE
+//------------------------------------------------------------------------------------------------------------
+
+    public function restore($id)
+    {
+
+        $movies = Movies::where('id', $id)->restore();
+
+
+        return Redirect::route('movies.trash');
+
+    }
+
+
+//------------------------------------------------------------------------------------------------------------
+//              COMMENTS
+//------------------------------------------------------------------------------------------------------------
+
+    public function comment(Request $request, $id)
+    {
+        // Si t'utilises cette méthode create, il faut ajouter dans le modèle (ici comments) le fillable
+        // Ici on doit ajouter dans fillable : content, movies_id, date_created
+
+        // On peut très bien utiliser la méthode new Comments
+        // Dans ce cas, pas besoin d'ajouter fillable ect...
+        Comments::create([
+            'content'       => $request->input('content'),
+            'movies_id'     => $id,
+            'user_id'       => 2,
+            'date_created'  => new \DateTime()
+        ]);
+
+        return Redirect::route( 'movies.read', ['id'=> $id] );
+    }
 
 }

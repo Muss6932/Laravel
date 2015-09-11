@@ -1,15 +1,46 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
-*/
+
+/*========================================================================*/
+
+/**
+ * Routes implicites vers mes controlleurs préconcues car ces controlleurs use
+ * traits avec les fonctionnalités de l'authentification déjà faite
+ * (login, password ...)
+ */
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+    'password' => 'Auth\PasswordController'
+]);
+
+
+//------------ GROUPE ADMIN
+//------------
+Route::group([  'prefix' => 'admin',
+                'middleware' => 'auth'], function () {
+
+
+
+
+
+
+
+
+
+
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Application Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can register all of the routes for an application.
+    | It's a breeze. Simply tell Laravel the URIs it should respond to
+    | and give it the controller to call when that URI is requested.
+    |
+    */
 
 Route::get('/', [   'uses' => 'PagesController@welcome',
                     'as'   => 'welcome']);
@@ -43,6 +74,11 @@ Route::get('/faq', ['uses' => 'PagesController@faq',
 
 
 
+
+
+
+
+
 /*
 |------------------------------------------------------------------------
 |           Actors
@@ -61,6 +97,12 @@ Route::group(['prefix' => 'actors', 'as' => 'actors'], function() {
     */
     Route::get('/create', ['uses' => 'ActorsController@create',
                             'as'  => '.create']);
+
+    /*
+    | Route pour réceptionner des données du formulaires
+     */
+    Route::post('/post', [ 'uses' => 'ActorsController@store',
+                            'as'  => '.post']);
 
     /*
     | Route pour la page 'Read'
@@ -104,6 +146,12 @@ Route::group(['prefix' => 'directors', 'as' => 'directors'], function() {
                             'as'  => '.create']);
 
     /*
+    | Route pour réceptionner des données du formulaires
+     */
+    Route::post('/post', ['uses' => 'DirectorsController@store',
+        'as' => '.post']);
+
+    /*
     | Route pour la page 'Read'
     */
     Route::get('/read/{id}', ['uses' => 'DirectorsController@read',
@@ -145,6 +193,13 @@ Route::group(['prefix' => 'movies'], function() {
                             'as'  => 'movies.create']);
 
     /*
+    | Route pour réceptionner des données du formulaires
+     */
+    Route::post('/post', ['uses' => 'MoviesController@store',
+                            'as' => 'movies.post']);
+
+
+    /*
     | Route pour la page 'Read'
     */
     Route::get('/read/{id}', [  'uses' => 'MoviesController@read',
@@ -182,8 +237,25 @@ Route::group(['prefix' => 'movies'], function() {
     /*
     | Route pour 'Select'
     */
-    Route::get('/select', ['uses' => 'MoviesController@select',
-                                   'as' => 'movies.select']);
+    Route::get('/select', [   'uses' => 'MoviesController@select',
+                                'as' => 'movies.select']);
+
+
+    /*
+    | Route pour 'Trash'
+    */
+    Route::get('/trash', ['uses' => 'MoviesController@trash',
+                            'as' => 'movies.trash']);
+
+    /*
+    | Route pour 'Restore'
+    */
+    Route::get('/restore/{id}', ['uses' => 'MoviesController@restore',
+                              'as' => 'movies.restore']);
+
+    Route::post('/comments/{id}', ['uses' => 'MoviesController@comment',
+        'as' => 'movies.comments'])
+        ->where('id', '[0-9]+');
 
 
 });
@@ -231,6 +303,7 @@ Route::controller('categories', 'CategoriesController', [ 'getIndex'   => 'categ
 
 
 
+
 /*
 |------------------------------------------------------------------------
 |           Cinéma
@@ -241,8 +314,15 @@ Route::controller('cinemas', 'CinemasController', [ 'getIndex'  => 'cinemas.inde
                                                     'getCreate' => 'cinemas.create',
                                                     'getRead'   => 'cinemas.read',
                                                     'getUpdate' => 'cinemas.update',
-                                                    'getDelete' => 'cinemas.delete']);
+                                                    'getDelete' => 'cinemas.delete',
+                                                    'getSeance' => 'cinemas.seance']);
 
+
+/*
+| Route pour réceptionner des données du formulaires
+ */
+Route::post('/post', ['uses' => 'CinemasController@store',
+    'as' => 'cinemas.post']);
 
 /*
 |------------------------------------------------------------------------
@@ -252,3 +332,31 @@ Route::controller('cinemas', 'CinemasController', [ 'getIndex'  => 'cinemas.inde
 
 Route::get('/search', ['uses' => 'PagesController@search', 'as' => 'search']);
 
+
+
+/*
+|------------------------------------------------------------------------
+|           Commentaires
+|------------------------------------------------------------------------
+*/
+
+Route::controller('comments', 'CommentsController', [   'getIndex'      => 'comments.index',
+                                                        'getDelete'     => 'comments.delete',
+                                                        'getSelect'     => 'comments.select']);
+
+
+
+/*
+|------------------------------------------------------------------------
+|           PROFIL
+|------------------------------------------------------------------------
+*/
+
+Route::get('/update', ['uses' => 'Auth\AuthController@update', 'as' => 'profil.update']);
+Route::post('/maj', ['uses' => 'Auth\AuthController@maj', 'as' => 'profil.maj']);
+
+
+
+//---------Fermeture groupe admin
+//---------
+});

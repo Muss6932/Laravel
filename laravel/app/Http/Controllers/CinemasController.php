@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Cinemas;
+use App\Model\Movies;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -53,5 +54,25 @@ class CinemasController extends Controller
         return Redirect::route('cinemas.index');
     }
 
+
+
+    public function getSeance($id)
+    {
+        $datas = [
+            'cinema' => Cinemas::find($id),
+            'movies' => $this->movies()
+        ];
+
+        return view('Cinemas/seance', $datas);
+    }
+
+
+
+    public function movies()
+    {
+        $movies = Movies::all();
+
+        return $movies;
+    }
 
 }

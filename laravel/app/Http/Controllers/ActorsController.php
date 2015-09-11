@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\ActorsRequest;
 use App\Model\Actors;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -53,6 +54,52 @@ class ActorsController extends Controller
         return Redirect::route('actors.index');
     }
 
+    /**
+     * ActorsRequest est une classe de validation de formulaire
+     * Cette classe est liée à la requête, c'est une classe FormRequest
+     * Le mécanisme de validation de formulaire dans Laravel
+     * valide le formulaire et fais une redirection vers create
+     * quand mon formulaire contient des erreurs sinon rentre dans l'action store()
+     */
+    public function store(ActorsRequest $request)
+    {
+        // J'enregistre un nouvel acteur dès que mon
+        // formulaire est valide (0 erreur)
+        $actor = new Actors();
+        $actor->firstname       = $request->firstname;
+        $actor->lastname        = $request->lastname;
+        $actor->dob             = $request->dob;
+        $actor->nationality     = $request->nationality;
+        $actor->roles           = $request->roles;
+        $actor->recompenses     = $request->recompenses;
+        $actor->biography       = $request->biography;
+
+        //------------------------------------------------
+        // Pour les images :
+
+        $filename = ""; // define null
+        if($request->hasFile('image'))
+        {
+            // Save the name of file upload
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+
+            // Move upload
+            $destinationPath = public_path() . '/uploads/actors/';  // path vers public
+            $file->move($destinationPath, $filename);   // move the image file into public/upload/actor
+        }
+
+        $actor->image = asset('uploads/actors/'.$filename);
+
+        //------------------------------------------------
+
+
+        $actor->save();
+
+        Session::flash('success' , "L'acteur {$actor->firsname} {$actor->lastname} a bien été ajouté.");
+
+        return Redirect::route('actors.index');
+    }
 
 
 

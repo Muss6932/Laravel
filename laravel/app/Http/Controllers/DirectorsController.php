@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\DirectorsRequest;
 use App\Model\Directors;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -51,7 +52,40 @@ class DirectorsController extends Controller
         return Redirect::route('directors.index');
     }
 
+    public function store(DirectorsRequest $request)
+    {
+        // J'enregistre un nouvel acteur dès que mon
+        // formulaire est valide (0 erreur)
+        $director = new Directors();
+        $director->firstname = $request->firstname;
+        $director->lastname = $request->lastname;
+        $director->dob = $request->dob;
+        $director->image = $request->image;
+        $director->biography = $request->biography;
 
+        //-------------------------------------
+
+        $filename = "";
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName();
+
+            $destinationPath = public_path() . '/uploads/directors/';
+            $file->move($destinationPath, $filename);
+        }
+
+        $director->image = asset('uploads/directors/' . $filename);
+
+        //-------------------------------------
+
+
+        $director->save();
+
+        Session::flash('success', "Le réalisateur {$director->firsname} {$director->lastname} a bien été ajouté.");
+
+        return Redirect::route('directors.index');
+    }
 
 
 

@@ -28,21 +28,21 @@
                         <a href="#"><i class="fa fa-home"></i>&nbsp;&nbsp;Home</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-film"></i>&nbsp;&nbsp;Film</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-film"></i>&nbsp;&nbsp;Films</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('movies.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les films</a></li>
                             <li><a href="{{route('movies.create')}}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un film</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i>&nbsp;&nbsp;Catégorie</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-book"></i>&nbsp;&nbsp;Catégories</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('categories.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les catégories</a></li>
                             <li><a href="{{route('categories.create')}}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter une catégorie</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-star"></i>&nbsp;&nbsp;Acteur</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-star"></i>&nbsp;&nbsp;Acteurs</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('actors.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les acteurs</a></li>
                             <li><a href="{{route('actors.create')}}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un acteur</a></li>
@@ -56,7 +56,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ticket"></i>&nbsp;&nbsp;Cinéma</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-ticket"></i>&nbsp;&nbsp;Cinémas</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('cinemas.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les
                                     cinémas</a></li>
@@ -64,10 +64,19 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>&nbsp;&nbsp;Utilisateur</a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>&nbsp;&nbsp;Utilisateurs</a>
                         <ul class="dropdown-menu">
                             <li><a href="{{route('users.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les utilisateurs</a></li>
                             <li><a href="{{route('users.create')}}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un utilisateur</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-comment"></i>&nbsp;&nbsp;Commentaires</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{route('comments.index')}}"><i class="fa fa-search"></i>&nbsp;&nbsp;Voir les
+                                    commentaires</a></li>
+                            {{--<li><a href="{{route('comments.index')}}"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter un--}}
+                                    {{--utilisateur</a></li>--}}
                         </ul>
                     </li>
                 </ul> <!-- / .navbar-nav -->
@@ -272,23 +281,23 @@
                         </li>
                         <!-- /3. $END_NAVBAR_ICON_BUTTONS -->
 
-                        <li>
-                            <form class="navbar-form pull-left">
-                                <input type="text" class="form-control" placeholder="Search">
-                            </form>
-                        </li>
+                        {{--<li>--}}
+                            {{--<form class="navbar-form pull-left">--}}
+                                {{--<input type="text" class="form-control" placeholder="Search">--}}
+                            {{--</form>--}}
+                        {{--</li>--}}
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle user-menu" data-toggle="dropdown">
-                                <img src="assets/demo/avatars/1.jpg" alt="">
-                                <span>John Doe</span>
+                                <img src="{{ Auth::user()->image }}" alt="">
+                                <span><b>{{ Auth::user()->name }}</b></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#"><span class="label label-warning pull-right">New</span>Profile</a></li>
-                                <li><a href="#"><span class="badge badge-primary pull-right">New</span>Account</a></li>
+                                <li><a href=""><span class="label label-warning pull-right">New</span>Profil</a></li>
+                                <li><a href="{{ route('profil.update') }}"><span class="badge badge-primary pull-right">New</span>Modifier</a></li>
                                 <li><a href="#"><i class="dropdown-icon fa fa-cog"></i>&nbsp;&nbsp;Settings</a></li>
                                 <li class="divider"></li>
-                                <li><a href="pages-signin.html"><i class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
+                                <li><a href="{{ url('auth/logout') }}"><i class="dropdown-icon fa fa-power-off"></i>&nbsp;&nbsp;Log Out</a></li>
                             </ul>
                         </li>
                     </ul> <!-- / .navbar-nav -->

@@ -12,13 +12,15 @@ var elixir = require('laravel-elixir');
  */
 
 elixir(function(mix) {
+
     mix.sass([
         'footer.sass',
         'style.sass'
     ]);
 
     mix.scripts([
-     "searchtable.js"
+        "app.js",
+        'ajax.js'
     ]);
 
 });

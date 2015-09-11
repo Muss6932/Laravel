@@ -11,6 +11,10 @@ class Users extends Model {
     protected $table = 'user';
 
 
+    public function comments()
+    {
 
+        return $this->hasMany('App\Model\Comments');
+    }
 
 }

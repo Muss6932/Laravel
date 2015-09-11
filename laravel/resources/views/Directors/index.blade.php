@@ -27,7 +27,7 @@
                 <div role="grid" id="jq-datatables-example_wrapper" class="dataTables_wrapper form-inline no-footer">
 
                     <table cellpadding="0" cellspacing="0" border="0"
-                           class="table table-striped table-bordered dataTable no-footer" id="jq-datatables-example"
+                           class="table table-striped table-bordered dataTable no-footer list" id="jq-datatables-example"
                            aria-describedby="jq-datatables-example_info">
                         <thead>
                         <tr role="row">

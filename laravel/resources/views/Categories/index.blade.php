@@ -23,43 +23,28 @@
                 <strong>  catégories</strong> qui ont aucun film.
             </div>
             <div class="alert alert-info">
-                <strong>catégorie</strong> est la plus populaire <i>(films)</i>
+                La catégorie<strong> {{ $categorieMaxMovies->title }}</strong> est la plus populaire <i>(<b>{{ $categorieMaxMovies->countmovies }} </b>films)</i>
             </div>
             <div class="alert alert-warning">
-                <strong>catégories</strong> a le plus gros budget de l'année <i>2015</i> : 1000000$
+                La catégorie<strong> {{ $categorieMaxBudget->title }}</strong> a le plus gros budget de l'année <i>2015</i> : <b>{{ number_format($categorieMaxBudget->sumbudget, 0 , ",", " ") }} $</b>
             </div>
         </div>
-        <div class="col-sm-5">
-            <div class="stat-panel">
-                <div class="stat-cell bg-danger valign-middle">
-                    <!-- Stat panel bg icon -->
-                    <i class="fa fa-film bg-icon"></i>
-                    <!-- Big text -->
-                    <span class="text-bg">Comments</span><br>
-                </div>
-                <!-- /.stat-row -->
-                <div class="stat-row">
-                    <div class="col-sm-4">
-                        <div class="stat-cell  no-border-t text-center">
-                            <p class=" text-lg"><strong>4:50</strong></p>
-                            <small>PM</small>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="stat-cell  no-border-t text-center">
-                            <p class=" text-lg"><strong>4:50</strong></p>
-                            <small>PM</small>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="stat-cell  no-border-t text-center">
-                            <p class=" text-lg"><strong>4:50</strong></p>
-                            <small>PM</small>
-                        </div>
-                    </div>
 
+        <div class="col-sm-5">
+            <div class="panel panel-info panel-dark widget-profile">
+                <div class="panel-heading">
+                    <div class="widget-profile-bg-icon"><i class="fa fa-film"></i></div>
+                    <div class="widget-profile-header">
+                        <span class="text-bg"><b>Catégories {{ $random['categorie']->title }}</b></span><br>
+                    </div>
                 </div>
-                <!-- /.stat-row -->
+                <!-- / .panel-heading -->
+                <div class="widget-profile-counters">
+                    <div class="col-xs-4"><span>{{ $random['categorie']->movies->count() }}</span><br>FILMS</div>
+                    <div class="col-xs-4"><span>{{ $random['sumComments'] }}</span><br>COMMENTAIRES</div>
+                    <div class="col-xs-4"><span>{{ $random['sumActors'] }}</span><br>ACTEURS</div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -78,7 +63,7 @@
                         <tr role="row">
                             <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
                                 colspan="1"
-                                aria-label="Browser: activate to sort column ascending" style="width: 15%;">Image
+                                aria-label="Browser: activate to sort column ascending" style="width: 10%;">Image
                             </th>
                             <th class="sorting_asc" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
                                 colspan="1" aria-sort="ascending"

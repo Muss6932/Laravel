@@ -29,6 +29,7 @@
                            aria-describedby="jq-datatables-example_info">
                         <thead>
                         <tr role="row">
+                            <th style="width: 1%;"></th>
                             <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
                                 colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 15%;">
                                 Cinéma
@@ -44,11 +45,17 @@
                         <tbody>
                         @foreach($cinema as $salle)
                             <tr class="gradeA odd">
+                                <td>
+                                    <label for="selectFilm{{ $salle->id }}">{{ $salle->id }}</label>
+                                    <input type="checkbox" value="{{$salle->id}}" id="selectCinema{{ $salle->id }}"
+                                           name="selectCinema[]">
+                                </td>
                                 <td class="sorting_1" style="font-weight: bold; color: #090E0F">{{ $salle->title }}</td>
                                 <td>{{ $salle->adresse }} {{ $salle->cp }} {{ $salle->ville }} </td>
                                 <td>
                                     <a href="{{ route('cinemas.update', [ 'id' => $salle->id ] ) }}" style="width: 100%;" class="btn btn-default"><i class="fa fa-wrench"></i>&nbsp;&nbsp;Modifier</a>
                                     <a href="{{ route('cinemas.delete', [ 'id' => $salle->id ] ) }}" style="width: 100%;" class="btn btn-danger"><i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer</a>
+                                    <a href="{{ route('cinemas.seance', [ 'id' => $salle->id ] ) }}" style="width: 100%;" class="btn btn-info"><i class="fa fa-plus"></i>&nbsp;&nbsp;Ajouter séance</a>
                                 </td>
                             </tr>
                         @endforeach
