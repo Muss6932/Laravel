@@ -126,12 +126,42 @@ $(document).ready(function(){
             elt.find('textarea').val(" ");
         });
         console.log('coucou');
-    })
+    });
 
 
 
 
 
+    // AJOUTER UN FILM EN AJAX, LA DIV DISPARAIT A L'AJOUT
+
+
+    $('form#addMovie').submit(function (e) {
+        e.preventDefault();
+        console.log('Mon evenement!');
+
+        var elt = $(this);
+        //
+        //console.log(elt);
+        //console.log(elt.attr('action'));
+        //console.log(elt.serialize());
+
+
+        $.ajax({
+            url: elt.attr('action'),
+            method: "POST", // Methode d'envoi de ma requete
+            data: elt.serialize()
+            // data: envoyer des données
+        }).done(function () {
+            //elt.parents('.panel').fadeOut('slow');
+            $.growl.notice({title: "Bravo!", message: "Le film a été ajouté", duration: 7000});
+            elt.find('input[name="title"]').val(" ");
+            elt.find('input[name="categories"]').val(" ");
+            elt.find('textarea').val(" ");
+
+
+        });
+
+    });
 
 
 

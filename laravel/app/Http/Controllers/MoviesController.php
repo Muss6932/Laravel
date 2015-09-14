@@ -21,6 +21,7 @@ class MoviesController extends Controller
 {
 
 
+
     public function index($column = null, $value = null){
 
         if ($column == null && $value == null) {
@@ -382,7 +383,8 @@ class MoviesController extends Controller
             'content'       => $request->input('content'),
             'movies_id'     => $id,
             'user_id'       => 2,
-            'date_created'  => new \DateTime()
+            'date_created'  => new \DateTime(),
+            'state'         => 1
         ]);
 
         return Redirect::route( 'movies.read', ['id'=> $id] );

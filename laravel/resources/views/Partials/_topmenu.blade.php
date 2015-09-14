@@ -25,7 +25,7 @@
             <div>
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#"><i class="fa fa-home"></i>&nbsp;&nbsp;Home</a>
+                        <a href="{{ route('welcome') }}"><i class="fa fa-home"></i>&nbsp;&nbsp;Home</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-film"></i>&nbsp;&nbsp;Films</a>

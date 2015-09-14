@@ -184,8 +184,49 @@ $(document).ready(function(){
 
 
 
+        var easyPieChartDefaults = {
+            animate: 2000,
+            scaleColor: false,
+            lineWidth: 6,
+            lineCap: 'square',
+            size: 90,
+            trackColor: '#e5e5e5'
+        };
+
+        $('.easy-pie-chart-1').easyPieChart($.extend({}, easyPieChartDefaults, {
+            barColor: PixelAdmin.settings.consts.COLORS[1]
+        }));
 
 
+
+
+
+
+
+
+
+
+        $('#jq-growl-default').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!"});
+        });
+        $('#jq-growl-error').click(function () {
+            $.growl.error({message: "The kitten is attacking!"});
+        });
+        $('#jq-growl-notice').click(function () {
+            $.growl.notice({message: "The kitten is cute!"});
+        });
+        $('#jq-growl-warning').click(function () {
+            $.growl.warning({message: "The kitten is ugly!"});
+        });
+        $('#jq-growl-small').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!", size: 'small'});
+        });
+        $('#jq-growl-large').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!", size: 'large'});
+        });
+        $('#jq-growl-static').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!", duration: 9999 * 9999});
+        });
 
 
     });
@@ -324,12 +365,42 @@ $(document).ready(function(){
             elt.find('textarea').val(" ");
         });
         console.log('coucou');
-    })
+    });
 
 
 
 
 
+    // AJOUTER UN FILM EN AJAX, LA DIV DISPARAIT A L'AJOUT
+
+
+    $('form#addMovie').submit(function (e) {
+        e.preventDefault();
+        console.log('Mon evenement!');
+
+        var elt = $(this);
+        //
+        //console.log(elt);
+        //console.log(elt.attr('action'));
+        //console.log(elt.serialize());
+
+
+        $.ajax({
+            url: elt.attr('action'),
+            method: "POST", // Methode d'envoi de ma requete
+            data: elt.serialize()
+            // data: envoyer des données
+        }).done(function () {
+            //elt.parents('.panel').fadeOut('slow');
+            $.growl.notice({title: "Bravo!", message: "Le film a été ajouté", duration: 7000});
+            elt.find('input[name="title"]').val(" ");
+            elt.find('input[name="categories"]').val(" ");
+            elt.find('textarea').val(" ");
+
+
+        });
+
+    });
 
 
 

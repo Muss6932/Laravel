@@ -42,8 +42,18 @@ Route::group([  'prefix' => 'admin',
     |
     */
 
+  /*
+  | Route pour la page 'welcome'
+  */
 Route::get('/', [   'uses' => 'PagesController@welcome',
                     'as'   => 'welcome']);
+
+
+/*
+| Route pour réceptionner des données du formulaires
+ */
+Route::post('/postMovie', ['uses' => 'PagesController@addMovie',
+                        'as' => 'welcome.post.movie']);
 
 
 /*
@@ -71,6 +81,15 @@ Route::get('/mt', ['uses' => 'PagesController@mention',
 */
 Route::get('/faq', ['uses' => 'PagesController@faq',
                     'as'   => 'faq']);
+
+
+/*
+|------------------------------------------------------------------------
+|           Search
+|------------------------------------------------------------------------
+*/
+
+Route::get('/search', ['uses' => 'PagesController@search', 'as' => 'search']);
 
 
 
@@ -321,16 +340,8 @@ Route::controller('cinemas', 'CinemasController', [ 'getIndex'  => 'cinemas.inde
 /*
 | Route pour réceptionner des données du formulaires
  */
-Route::post('/post', ['uses' => 'CinemasController@store',
+Route::post('/cinemas/post', ['uses' => 'CinemasController@store',
     'as' => 'cinemas.post']);
-
-/*
-|------------------------------------------------------------------------
-|           Search
-|------------------------------------------------------------------------
-*/
-
-Route::get('/search', ['uses' => 'PagesController@search', 'as' => 'search']);
 
 
 

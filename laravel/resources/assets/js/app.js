@@ -184,8 +184,49 @@ $(document).ready(function(){
 
 
 
+        var easyPieChartDefaults = {
+            animate: 2000,
+            scaleColor: false,
+            lineWidth: 6,
+            lineCap: 'square',
+            size: 90,
+            trackColor: '#e5e5e5'
+        };
+
+        $('.easy-pie-chart-1').easyPieChart($.extend({}, easyPieChartDefaults, {
+            barColor: PixelAdmin.settings.consts.COLORS[1]
+        }));
 
 
+
+
+
+
+
+
+
+
+        $('#jq-growl-default').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!"});
+        });
+        $('#jq-growl-error').click(function () {
+            $.growl.error({message: "The kitten is attacking!"});
+        });
+        $('#jq-growl-notice').click(function () {
+            $.growl.notice({message: "The kitten is cute!"});
+        });
+        $('#jq-growl-warning').click(function () {
+            $.growl.warning({message: "The kitten is ugly!"});
+        });
+        $('#jq-growl-small').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!", size: 'small'});
+        });
+        $('#jq-growl-large').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!", size: 'large'});
+        });
+        $('#jq-growl-static').click(function () {
+            $.growl({title: "Growl", message: "The kitten is awake!", duration: 9999 * 9999});
+        });
 
 
     });

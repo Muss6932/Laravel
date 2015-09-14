@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Requests\UserRequest;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Validator;
 use App\Http\Controllers\Controller;
@@ -134,23 +135,23 @@ class AuthController extends Controller
     public function maj(UserRequest $request)
     {
 
-        dump($request->all());
-        exit();
+//        dump($request->all());
+//        exit();
         $user = Auth::user();
 
-        $user->name = $request->name;
-        $user->firstname = $request->firstname;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->email = $request->email;
-        $user->ville = $request->ville;
-        $user->image = $request->image;
-        $user->description = $request->description;
+        $user->name = $request['name'];
+        $user->firstname = $request['firstname'];
+        $user->email = $request['email'];
+        $user->password = $request['password'];
+        $user->email = $request['email'];
+        $user->ville = $request['ville'];
+        $user->image = $request['image'];
+        $user->description = $request['description'];
 
         $user->save();
 
 
-
+        return view('Pages/welcome');
     }
 
 
