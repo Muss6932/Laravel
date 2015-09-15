@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-    console.log('Blablabla');
+    //console.log('Blablabla');
 
 
     // 1ERE METHODE

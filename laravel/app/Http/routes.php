@@ -20,40 +20,55 @@ Route::group([  'prefix' => 'admin',
                 'middleware' => 'auth'], function () {
 
 
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
+|
+*/
 
 
 
 
 
 
+/*
+|--------------------------------------------------------------------------
+| Route pour la page 'Contact'
+|--------------------------------------------------------------------------
+*/
 
 
-
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Routes
-    |--------------------------------------------------------------------------
-    |
-    | Here is where you can register all of the routes for an application.
-    | It's a breeze. Simply tell Laravel the URIs it should respond to
-    | and give it the controller to call when that URI is requested.
-    |
-    */
-
-  /*
-  | Route pour la page 'welcome'
-  */
+/*
+| Route pour la page 'welcome'
+*/
 Route::get('/', [   'uses' => 'PagesController@welcome',
                     'as'   => 'welcome']);
 
 
 /*
+| Route pour la page 'welcome'
+*/
+Route::get('/advanced', [ 'uses' => 'PagesController@welcomeAdvanced',
+                            'as' => 'welcome.advanced']);
+
+/*
 | Route pour réceptionner des données du formulaires
  */
-Route::post('/postMovie', ['uses' => 'PagesController@addMovie',
-                        'as' => 'welcome.post.movie']);
+Route::post('postMovie', ['uses' => 'PagesController@addMovie',
+                             'as' => 'welcome.post.movie']);
+
+
+/*
+ * Route pour le realtime
+ */
+Route::get('seanceajax', [  'uses' => 'PagesController@ajax',
+                            'as'   => 'welcome.ajax']);
+
 
 
 /*
@@ -225,7 +240,7 @@ Route::group(['prefix' => 'movies'], function() {
                                 'as'   => 'movies.read'])
     ->where('id', '[0-9]+');
 
-    /*
+    /*http://localhost:8000/color-builder.html
     | Route pour la page 'Update'
     */
     Route::get('/update/{id}', ['uses' => 'MoviesController@update',
@@ -329,20 +344,20 @@ Route::controller('categories', 'CategoriesController', [ 'getIndex'   => 'categ
 |------------------------------------------------------------------------
 */
 
+/*
+| Route pour réceptionner des données du formulaires
+*/
+Route::post('cinemas/post/{id}', ['uses' => 'CinemasController@store',
+    'as' => 'cinemas.post'])
+    ->where('id', '[0-9]+');
+
+
 Route::controller('cinemas', 'CinemasController', [ 'getIndex'  => 'cinemas.index',
                                                     'getCreate' => 'cinemas.create',
                                                     'getRead'   => 'cinemas.read',
                                                     'getUpdate' => 'cinemas.update',
                                                     'getDelete' => 'cinemas.delete',
                                                     'getSeance' => 'cinemas.seance']);
-
-
-/*
-| Route pour réceptionner des données du formulaires
- */
-Route::post('/cinemas/post', ['uses' => 'CinemasController@store',
-    'as' => 'cinemas.post']);
-
 
 
 /*

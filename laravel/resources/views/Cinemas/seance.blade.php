@@ -28,18 +28,18 @@
                 </div>
                 <div class="panel-body">
 
-                    <form enctype="multipart/form-data" method="post" action="{{ route('cinemas.post') }}"
-                          class="form-horizontal formular-validate" novalidate="novalidate">
+                    <form method="post" action="{{ route('cinemas.post', [ 'id' => $cinema->id ]) }}"
+                          class="form-horizontal" novalidate="novalidate">
 
                         {{--IMPORTANT : CSRF--}}
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="moviesActors" class="col-sm-2 control-label">Film</label>
+                            <label for="movies" class="col-sm-2 control-label">Film</label>
 
                             <div class="col-sm-9">
-                                <select class="select2-multiple form-control"  name="moviesActors[]"
-                                        id="moviesActors">
+                                <select class="select2-multiple form-control"  name="movies"
+                                        id="movies">
                                     <option></option>
                                     @foreach( $movies as $movie)
                                         <option value="{{ $movie->id }}">{{ $movie->title }}</option>
@@ -51,7 +51,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="moviesActors" class="col-sm-2 control-label">Date de la séance</label>
+                            <label for="dateSession" class="col-sm-2 control-label">Date de la séance</label>
 
                             <div class="col-sm-9">
                                 <div class="input-group date">
@@ -62,18 +62,24 @@
                                            class="date form-control">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                 </div>
+                                @if ($errors->has('dateSession')) <p
+                                        class="help-block text-danger">{{ $errors->first('dateSession') }}</p>@endif
+
                             </div>
                         </div>
 
 
                         <div class="form-group">
-                            <label for="moviesActors" class="col-sm-2 control-label">Heure de la séance</label>
+                            <label for="heureSession" class="col-sm-2 control-label">Heure de la séance</label>
 
                             <div class="col-sm-9">
                                 <div class="input-group date">
                                     <input type="text" class="form-control" name ="heureSession" id="timepicker2">
                                     <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
                                 </div>
+                                @if ($errors->has('heureSession')) <p
+                                        class="help-block text-danger">{{ $errors->first('heureSession') }}</p>@endif
+
                             </div>
                         </div>
 

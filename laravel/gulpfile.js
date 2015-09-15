@@ -20,7 +20,14 @@ elixir(function(mix) {
 
     mix.scripts([
         "app.js",
-        'ajax.js'
+        'ajax.js',
+        'realtime.js'
     ]);
+
+    // Pour séparer de mes fichier concatener
+    // Tu peux très bien le concatener avec les autres, c'est juste pour l'exercice
+    mix.scripts([
+        "gmap.js"
+    ], 'public/js/gmap.js');
 
 });

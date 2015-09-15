@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Cinemas;
+use App\Http\Requests\CinemasRequest;
+use App\Http\Requests\SessionsRequest;
+use App\Model\Cinema;
 use App\Model\Movies;
+use App\Model\Sessions;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -18,7 +22,7 @@ class CinemasController extends Controller
     public function getIndex()
     {
         $datas = [
-            "cinema" => Cinemas::all()
+            "cinema" => Cinema::all()
         ];
 
         return view('Cinemas/index', $datas);
@@ -46,7 +50,7 @@ class CinemasController extends Controller
 
     public function getDelete($id)
     {
-        $cinema = Cinemas::find($id);
+        $cinema = Cinema::find($id);
         $cinema->delete();
 
         Session::flash('success', "Le cinéma {$cinema->title} a bien été supprimé. ");
@@ -59,7 +63,7 @@ class CinemasController extends Controller
     public function getSeance($id)
     {
         $datas = [
-            'cinema' => Cinemas::find($id),
+            'cinema' => Cinema::find($id),
             'movies' => $this->movies()
         ];
 
@@ -73,6 +77,30 @@ class CinemasController extends Controller
         $movies = Movies::all();
 
         return $movies;
+    }
+
+
+
+    public function store($id, SessionsRequest $request)
+    {
+//        dump($request->all());
+//        exit();
+
+
+        $session = new Sessions();
+
+        $session->movies_id     = $request->movies;
+        $session->cinema_id     = $id;
+        $session->date_session  = date_create_from_format('d/m/Y H:i', $request->dateSession . " " . $request->heureSession);
+
+
+
+        $session->save();
+
+
+        Session::flash('success', "La séance a été ajouté.");
+
+        return Redirect::route('cinemas.index');
     }
 
 }

@@ -1,24 +1,25 @@
 @extends('layout')
 
 
-
-
-
 <!--Écrire dans la section content-->
 @section('content')
 
 
+    <div class="row" style="margin-bottom: 25px">
+        <div class="col-sm-12">
+            <div class="btn-group" role="group">
+                <a class="btn" href="{{ route('welcome') }}">Simple</a>
+                <a class="btn" href="{{ route('welcome.advanced') }}">Avancé</a>
+                <a class="btn" href="">Professionnel</a>
+            </div>
+        </div>
+
+    </div>
 
 
     <div class="row">
 
-        <div class="col-sm-12">
-            <div class="btn-group" role="group">
-                <a class="btn" href="">Simple</a>
-                <a class="btn" href="">Avancé</a>
-                <a class="btn" href="">Professionnel</a>
-            </div>
-        </div>
+
 
         <div class="col-sm-6">
             <div class="stat-panel">
@@ -151,7 +152,7 @@
         <div class="col-sm-6">
 
             <div class="panel">
-                <form method="post" action="{{ route('welcome.post.movie') }}" class="panel form-horizontal">
+                <form id="addMovie" method="post" action="{{ route('welcome.post.movie') }}" class="panel form-horizontal">
 
                     {{ csrf_field() }}
 
@@ -202,33 +203,51 @@
             </div>
         </div>
 
-        <div class="col-sm-6">
-            <div class="panel panel-success">
+        <div class="col-sm-6" id="panelajax" data-url="{{ route('welcome.ajax') }}">
+            <div class="panel panel-success" id="dashboard-recent">
                 <div class="panel-heading">
                     <span class="panel-title"><i class="fa fa-bullhorn"></i>&nbsp;&nbsp;Prochaines séances</span>
-                    <a href="#" class=" pull-right"><b>{{ $seanceavenir }}</b> séance à venir</a>
+                    <a href="#" class=" pull-right"><b>{{ count($seanceavenir) }}</b> séance à venir</a>
                 </div>
 
                 <ul class="list-group">
+                    @foreach( $seanceavenir as $seance)
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-sm-10">
-                                <a href="">Resident evil</a>
+                                <a href="">{{ $seance->movie }}</a>
 
-                                <p><span style="color: grey; font-style: italic ">Diffusé à</span> Pathé Bellecour</p>
+                                <p><span style="color: grey; font-style: italic ">Diffusé à</span> {{ $seance->cinema }}</p>
                             </div>
                             <div class="col-sm-2">
-                                <span class="label label-primary pull-right">Sortis dans 5 jours</span>
+                                <?php $jourrestant = date_diff(date_create_from_format('Y-m-d H:i:s', $seance->date), date_create())->format('%a')  ?>
+                                @if( $jourrestant < 2)
+                                    <span class="label label-warning pull-right">Sortis dans {{ $jourrestant }}
+                                        jours</span>
+                                @elseif($jourrestant < 11)
+                                    <span class="label label-success pull-right">Sortis dans {{ $jourrestant }} jours</span>
+                                @elseif($jourrestant > 10)
+                                    <span class="label label-primary pull-right">Sortis dans {{ $jourrestant }}
+                                        jours</span>
+                                @endif
+
                             </div>
                         </div>
 
                     </li>
-
+                    @endforeach
                 </ul>
 
             </div>
 
         </div>
+
+
+
+
+
+
+
 
 
 

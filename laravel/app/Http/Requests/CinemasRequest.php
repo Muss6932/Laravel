@@ -21,9 +21,6 @@ class CinemasRequest extends FormRequest
     public function rules()
     {
         return [
-            'movies'            => 'required|min:3|max:50',
-            'moviesActors'      => 'required|array',
-            'moviesDirectors'   => 'required|array',
 
 
         ];
@@ -34,7 +31,6 @@ class CinemasRequest extends FormRequest
     public function attributes(){
 
         return [
-            'movies'             => 'Film',
 
         ];
     }
@@ -44,7 +40,6 @@ class CinemasRequest extends FormRequest
     public function messages()
     {
         return [
-            'required'      => "Le champ ':attribute' est obligatoire.",
 
         ];
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Model\Actors;
 use App\Model\Categories;
+use App\Model\Cinema;
 use App\Model\Comments;
 use App\Model\Movies;
 use Illuminate\Http\Request;
@@ -28,8 +29,7 @@ class PagesController extends Controller
             'tauxFilmsFavoris' => $this->tauxFilmsFavoris(),
             'tauxFilmsDiffuses' => $this->tauxFilmsDiffuses(),
             'categories' => $this->categories(),
-            'seanceavenir' => $this->seanceAVenir()[0]->nombre,
-            'a' => $this->a(),
+            'seanceavenir' => $this->seanceAVenir(),
 
         ];
 
@@ -37,13 +37,26 @@ class PagesController extends Controller
     }
 
 
-    /**
-     * Page 'Contact'
-     */
+
     public function welcome(){
 
         return view('Pages/welcome', $this->datas());
     }
+
+
+
+
+    public function welcomeAdvanced()
+    {
+        $datas = [
+            'cinemas'   => Cinema::all(),
+        ];
+
+        return view('Pages/welcomeAdvanced', $datas);
+    }
+
+
+
 
     /**
      * Page 'Contact'
@@ -110,7 +123,10 @@ class PagesController extends Controller
 
 
         if ($validator->fails() ){
-            $message = $validator->messages();
+
+            return view('Pages/welcome', $this->datas());
+
+
         } else {
             $movie = new Movies();
 
@@ -192,28 +208,38 @@ class PagesController extends Controller
 
 //-------- sessions
 
+
+
     public function seanceAVenir(){
-        $nbseanceavenir = DB::select('select count(distinct(movies_id)) as nombre from sessions where date_session > now()');
-
-        return $nbseanceavenir;
-    }
-
-    public function a(){
-        $filmavenir = DB::select('SELECT movies.title, cinema.title, sessions.date_session
+        $filmavenir = DB::select('SELECT movies.id as id, movies.title as movie, cinema.title as cinema, sessions.date_session as date
                                   FROM sessions
                                   INNER JOIN movies ON movies.id = sessions.movies_id
                                   INNER JOIN cinema ON cinema.id = sessions.cinema_id
-                                  WHERE sessions.date_session > now()');
+                                  WHERE sessions.date_session > now()
+                                  ORDER BY sessions.date_session');
 
-        dump($filmavenir);
-        exit();
+        return $filmavenir;
     }
 
 
 
+    public function ajax(){
+        $datas = [
+            'seanceavenir' => $this->seanceAVenir(),
+        ];
+
+        return view('Pages/ajax', $datas);
+    }
 
 
 
+//---------------------------------------------------------------------------------------------------------
+//              WELCOME ADVANCED
+//---------------------------------------------------------------------------------------------------------
+
+    public function infocinema(){
+
+    }
 
 
 
