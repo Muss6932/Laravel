@@ -5,9 +5,15 @@ use App\Model\Actors;
 use App\Model\Categories;
 use App\Model\Cinema;
 use App\Model\Comments;
+use App\Model\Directors;
 use App\Model\Movies;
+use App\Model\Recommandations;
+use App\Model\Tasks;
+use App\Model\Users;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -19,6 +25,25 @@ class PagesController extends Controller
 {
 
     public function datas(){
+
+
+        // MONGO
+//        $m = new \MongoClient();        // connexion
+//        $db = $m->selectDB('laravel');  // choix de la base de donnée
+//        $collection = new \MongoCollection($db, 'unicorns');    // choix de la collection
+//
+//        // recherche des fruits
+//        $find = array('name' => 'Horny');
+//
+//        $result = $collection->find($find);
+//
+//        foreach ($result as $document){
+//            dump($document);
+//        }
+//
+//        exit();
+
+
         $datas = [
             'ageMoyen' => $this->ageMoyen()[0],
             'lyon' => $this->city('lyon'),
@@ -45,15 +70,6 @@ class PagesController extends Controller
 
 
 
-
-    public function welcomeAdvanced()
-    {
-        $datas = [
-            'cinemas'   => Cinema::all(),
-        ];
-
-        return view('Pages/welcomeAdvanced', $datas);
-    }
 
 
 
@@ -237,9 +253,238 @@ class PagesController extends Controller
 //              WELCOME ADVANCED
 //---------------------------------------------------------------------------------------------------------
 
-    public function infocinema(){
+    public function welcomeAdvanced()
+    {
+        $datas = [
+            'cinemas'           => Cinema::all(),
+            'recommandations'   => Recommandations::all(),
+            'users'             => $this->recentUser(),
+            'tasks'             => $this->tasks(),
+            'actorpercity'      => $this->actorpercity(),
+            'actorAge'          => $this->actorAge(),
+            'directors'         => $this->directors(),
+        ];
 
+        return view('Pages/welcomeAdvanced', $datas);
     }
+
+
+    public function recentUser(){
+        $recentUser = Users::orderBy('date_inscription','desc')
+                            ->take(10)
+                            ->get();
+
+        return $recentUser;
+    }
+
+    public function tasks(){
+        $tasks = Tasks::all();
+
+        return $tasks;
+    }
+
+
+    public function selectTasks(Request $request)
+    {
+
+        $tasks  = $request->input('selectTasks');
+
+        if (count($tasks) == 0) {
+            Session::flash('warning', "Aucune tache sélectionnée");
+
+        } else {
+            foreach ($tasks as $id) {
+                $tasks = Tasks::find($id);
+                $tasks->delete();
+            }
+            Session::flash('success', "Les taches ont été supprimé. ");
+
+        }
+
+        return Redirect::route('welcome.advanced');
+    }
+
+
+
+    public function actorpercity(){
+        $actorpercity = DB::select('SELECT city, COUNT(id) as nombre
+                                    FROM actors
+                                    GROUP BY city
+                                    HAVING COUNT(id) > 1');
+
+        return $actorpercity;
+    }
+
+
+    public function actorAge(){
+        $actorAge = DB::select('SELECT ROUND( (TIMESTAMPDIFF(YEAR, dob, NOW())) ) AS age FROM actors');
+
+        return $actorAge;
+    }
+
+    public function directors(){
+//        DB::connection()->enableQueryLog();
+
+        // mysql native
+       /* $directors = DB::select('SELECT directors.id
+                                 FROM directors
+                                 INNER JOIN directors_movies ON directors_movies.directors_id = directors.id
+                                 INNER JOIN movies ON movies.id = directors_movies.movies_id
+                                 GROUP BY directors.id
+                                 ORDER BY count(movies.id) DESC
+                                 LIMIT 4');*/
+
+        // query builder
+//        $directors = DB::table('directors')
+//            ->join('directors_movies', 'directors.id', '=', 'directors_movies.directors_id')
+//            ->join('movies', 'movies.id', '=', 'directors_movies.movies_id')
+//            ->select('directors.id')
+//            ->groupBy('directors.id')
+//            ->orderBy(DB::raw("COUNT(movies.id)"), 'desc')
+//            ->take(4)->get();
+
+        $directors =  Directors::has('movies')
+            ->join('directors_movies', 'directors.id', '=', 'directors_movies.directors_id')
+            ->groupBy('directors.id')
+            ->orderBy(DB::raw("COUNT(directors_movies.movies_id)"), 'desc')
+            ->take(4)
+            ->get();
+
+//        exit(dump($directors));
+
+//        $bestDirectors = array();
+//        foreach ($directors as $director){
+//            array_push($bestDirectors, Directors::find($director->id));
+//        }
+
+
+        return $directors;
+    }
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------
+//              WELCOME PROFESSIONAL
+//---------------------------------------------------------------------------------------------------------
+
+    public function welcomeProfessional()
+    {
+        $datas = [
+            'bestcinema'        => $this->bestcinema(),
+            'sumcomments'       => $this->sumcomments(),
+            'cinemasmovies'     => $this->cinemasmovies(),
+            'categories'        => $this->categories(),
+            'summovies'         => Movies::all()->count(),
+            'bestcats'         => $this->bestcat()
+        ];
+
+        return view('Pages/welcomeProfessional', $datas);
+    }
+
+
+
+
+
+
+
+    public function bestcat()
+    {
+        $query = DB::select('   SELECT SUM(budget) as budg , categories_id, categories.title
+                                FROM movies
+                                JOIN categories ON categories.id = movies.categories_id
+                                GROUP BY categories_id
+                                ORDER BY SUM(budget) DESC
+                                LIMIT 4');
+
+        return $query;
+    }
+
+
+//    public function fourBestCategories() {
+//        $fourBestCategories = DB::select('
+//        SELECT categories.id, categories.title, SUM(movies.budget) as sommeBudget, COUNT(movies.id) as nombredefilm
+//        FROM categories
+//        INNER JOIN movies ON movies.categories_id = categories.id
+//        GROUP BY categories.id
+//        ORDER BY sum(movies.budget) DESC
+//        LIMIT 4');
+//
+//        return $fourBestCategories;
+//    }
+//
+//    public function bestCategoriesMovies() {
+//
+//        $id_cat = [];
+//
+//
+//        foreach ( $this->fourBestCategories() as $categorie) {
+//            array_push($id_cat, $categorie->id);
+//        }
+//
+//        $categories = Categories::find($id_cat);
+//
+//        return $categories;
+//    }
+
+
+// -------------------- REPARTITION DU NOMBRE DE COMMENTAIRES PAR CINEMA
+
+    public function bestcinema() {
+//        $cinemas = Cinema::has('sessions')
+//            ->join('sessions', 'sessions.cinema_id', '=', 'cinema.id')
+//            ->groupBy('cinema.id')
+//            ->orderBy(DB::raw("COUNT(sessions.movies_id)"), 'desc')
+//            ->take(6)
+//            ->get();
+
+        $cine = DB::select('SELECT cinema.title, COUNT(comments.id) as nbcomments, cinema.id
+                            FROM cinema
+                            LEFT JOIN sessions
+                            ON cinema.id = sessions.cinema_id
+                            LEFT JOIN movies
+                            ON sessions.movies_id = movies.id
+                            LEFT JOIN comments
+                            ON comments.movies_id = movies.id
+                            GROUP BY cinema.id
+                            ORDER BY COUNT(comments.id) DESC
+                            LIMIT 6');
+
+        return $cine;
+    }
+
+    public function sumcomments() {
+        $sumcomments = $this->comments()->count();
+
+        return $sumcomments;
+    }
+
+    public function cinemasmovies() {
+
+        $tab = [];
+        foreach ($this->bestcinema() as $cine) {
+            array_push($tab,$cine->id);
+        };
+
+        $cinemasmovies = Cinema::find($tab);
+
+//        exit(dump($cinemasmovies));
+
+        return $cinemasmovies;
+    }
+
+
+// -------------------- REPARTITION DES FILMS PAR CATEGORIES
+
+
+
+
+
+
+
+
 
 
 

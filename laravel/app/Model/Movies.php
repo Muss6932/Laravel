@@ -39,4 +39,30 @@ class Movies extends Model {
         return $this->hasMany('App\Model\Actors');
     }
 
+    public function directors()
+    {
+
+        return $this->hasMany('App\Model\Directors');
+    }
+
+    public function sessions()
+    {
+
+        return $this->hasMany('App\Model\Sessions');
+    }
+
+
+
+
+
+
+
+    public function scopeBestcat($query, $id, $time)
+    {
+
+        $time2 = sprintf("%02d", $time + 1);
+        return $query->select('movies.budget')->join('categories', 'movies.categories_id', '=', 'categories.id')->where('categories.id', $id)->whereBetween('movies.date_release', array('2015-' . $time . '-00', '2015-' . $time2 . '-00'));
+    }
+
+
 }

@@ -176,7 +176,7 @@
                                 <div class="messages-list" id="main-navbar-messages">
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
                                         <div class="message-description">
                                             from <a href="#">Robert Jang</a>
@@ -186,7 +186,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/3.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
                                         <div class="message-description">
                                             from <a href="#">Michelle Bortz</a>
@@ -196,7 +196,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/4.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
                                         <div class="message-description">
                                             from <a href="#">Timothy Owens</a>
@@ -206,7 +206,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/5.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
                                         <div class="message-description">
                                             from <a href="#">Denise Steiner</a>
@@ -216,7 +216,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
                                         <div class="message-description">
                                             from <a href="#">Robert Jang</a>
@@ -226,7 +226,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
                                         <div class="message-description">
                                             from <a href="#">Robert Jang</a>
@@ -236,7 +236,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/3.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
                                         <div class="message-description">
                                             from <a href="#">Michelle Bortz</a>
@@ -246,7 +246,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/4.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
                                         <div class="message-description">
                                             from <a href="#">Timothy Owens</a>
@@ -256,7 +256,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/5.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
                                         <div class="message-description">
                                             from <a href="#">Denise Steiner</a>
@@ -266,7 +266,7 @@
                                     </div> <!-- / .message -->
 
                                     <div class="message">
-                                        <img src="assets/demo/avatars/2.jpg" alt="" class="message-avatar">
+                                        <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
                                         <div class="message-description">
                                             from <a href="#">Robert Jang</a>

@@ -1,6 +1,21 @@
 @extends('layout')
 
 
+
+
+@section('js')
+
+    @parent
+
+    <script src="{{asset('js/realtime.js')}}"></script>
+
+@endsection
+
+
+
+
+
+
 <!--Écrire dans la section content-->
 @section('content')
 
@@ -8,9 +23,9 @@
     <div class="row" style="margin-bottom: 25px">
         <div class="col-sm-12">
             <div class="btn-group" role="group">
-                <a class="btn" href="{{ route('welcome') }}">Simple</a>
+                <button class="btn active">Simple</button>
                 <a class="btn" href="{{ route('welcome.advanced') }}">Avancé</a>
-                <a class="btn" href="">Professionnel</a>
+                <a class="btn" href="{{ route('welcome.professional') }}">Professionnel</a>
             </div>
         </div>
 

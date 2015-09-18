@@ -13,4 +13,9 @@ class Directors extends Model {
     public $timestamps = false;
 
 
+    public function movies()
+    {
+
+        return $this->belongsToMany('App\Model\Movies');
+    }
 }

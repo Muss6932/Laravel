@@ -51,16 +51,28 @@ Route::get('/', [   'uses' => 'PagesController@welcome',
 
 
 /*
-| Route pour la page 'welcome'
+| Route pour la page 'welcome advanced'
 */
 Route::get('/advanced', [ 'uses' => 'PagesController@welcomeAdvanced',
                             'as' => 'welcome.advanced']);
 
 /*
-| Route pour réceptionner des données du formulaires
+| Route pour la page 'welcome advanced'
+*/
+Route::get('/professional', ['uses' => 'PagesController@welcomeProfessional',
+    'as' => 'welcome.professional']);
+
+/*
+| Route pour réceptionner des données du formulaires (ajout de film light)
  */
-Route::post('postMovie', ['uses' => 'PagesController@addMovie',
+Route::post('post-movie', ['uses' => 'PagesController@addMovie',
                              'as' => 'welcome.post.movie']);
+
+/*
+| Route pour réceptionner des données du formulaires (ajout de film light)
+*/
+Route::get('select-tasks', ['uses' => 'PagesController@selectTasks',
+                               'as' => 'welcome.select.task']);
 
 
 /*

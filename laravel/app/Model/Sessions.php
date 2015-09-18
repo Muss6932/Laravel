@@ -21,5 +21,9 @@ class Sessions extends Model
         return $this->belongsTo('App\Model\Cinema');
     }
 
+    public function movies()
+    {
 
+        return $this->belongsTo('App\Model\Movies');
+    }
 }

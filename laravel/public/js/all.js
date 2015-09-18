@@ -229,9 +229,26 @@ $(document).ready(function(){
         });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// fin
+
     });
 
-})
+});
 
 
 
@@ -406,22 +423,35 @@ $(document).ready(function(){
 
 
 
-});
-$(document).ready(function () {
+//--------------------------------------------------------------------------------------------------------
+//           supprimer tache dans welcome advanced
+//--------------------------------------------------------------------------------------------------------
 
-    setInterval(function () {
-        console.log('Ready for next..');
 
-        //appel ajax
+    $('form#deleteTasks').submit(function (e) {
+        e.preventDefault();
+
+        var elt = $(this);
+        console.log(elt);
+        console.log(elt.attr('action'));
+        console.log(elt.serialize());
+
+
         $.ajax({
-            url: $('#panelajax').attr('data-url')
-        }).done(function (data) {
-            $('#dashboard-recent').html(data);
+            url: elt.attr('action'),
+            method: "GET",              // Méthode d'envoi de ma requête
+            data: elt.serialize()       // data: envoyezr des données
+        }).done(function () {
+            $.growl.notice({message: "Les taches ont été supprimés", duration: 7000});
+
         });
 
-    }, 3000);
+
+    });
+
+
+
 
 
 });
-
 //# sourceMappingURL=all.js.map

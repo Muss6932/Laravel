@@ -52,7 +52,7 @@ var carte = new google.maps.Map(document.getElementById("map"), options);
                 });
 
             } else {
-                alert('Erreur de localisation : ' + status);
+                //alert('Erreur de localisation : ' + status);
             }
         });
 

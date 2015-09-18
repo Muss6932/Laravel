@@ -167,4 +167,34 @@ $(document).ready(function(){
 
 
 
+//--------------------------------------------------------------------------------------------------------
+//           supprimer tache dans welcome advanced
+//--------------------------------------------------------------------------------------------------------
+
+
+    $('form#deleteTasks').submit(function (e) {
+        e.preventDefault();
+
+        var elt = $(this);
+        console.log(elt);
+        console.log(elt.attr('action'));
+        console.log(elt.serialize());
+
+
+        $.ajax({
+            url: elt.attr('action'),
+            method: "GET",              // Méthode d'envoi de ma requête
+            data: elt.serialize()       // data: envoyezr des données
+        }).done(function () {
+            $.growl.notice({message: "Les taches ont été supprimés", duration: 7000});
+
+        });
+
+
+    });
+
+
+
+
+
 });

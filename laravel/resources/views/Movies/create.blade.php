@@ -47,7 +47,6 @@
 
 {{---------------------TYPE------------------------------------------------------}}
 
-
                     <div class="form-group">
                         <label for="typefilm" class="col-sm-2 control-label">Type</label>
 
