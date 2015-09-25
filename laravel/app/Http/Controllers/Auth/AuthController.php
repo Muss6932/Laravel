@@ -42,6 +42,7 @@ class AuthController extends Controller
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
+
     /**
      * Create a new authentication controller instance.
      *

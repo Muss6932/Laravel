@@ -238,11 +238,245 @@ $(document).ready(function(){
 
 
 
+// GRAPH POUR WELCOME
+
+    // RÉPARTITION DES FILMS PAR CATÉGORIES
+
+
+        $.getJSON($('#graph-film-categorie-index').data('url'), function (data) {
+
+                // Radialize the colors
+                Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+                    return {
+                        radialGradient: {
+                            cx: 0.5,
+                            cy: 0.3,
+                            r: 0.7
+                        },
+                        stops: [
+                            [0, color],
+                            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+                        ]
+                    };
+                });
+
+                // Build the chart
+                $('#graph-film-categorie-index').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: null
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                },
+                                connectorColor: 'silver'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: "Brands",
+                        data: data
+                    }]
+                });
+
+        });
+
+
+// GRAPH POUR WELCOME
+
+    // RÉPARTITION DES SÉANCES PAR MOIS
+
+
+        $.getJSON($('#graph-sessions-per-month').data('url'), function (data) {
+
+                $('#graph-sessions-per-month').highcharts({
+                chart: {
+                    type: 'column',
+                    margin: 75,
+                    options3d: {
+                        enabled: true,
+                        alpha: 10,
+                        beta: 25,
+                        depth: 70
+                    }
+                },
+                title: {
+                    text: null
+                },
+                subtitle: {
+                    text: null
+                },
+                plotOptions: {
+                    column: {
+                        depth: 25
+                    }
+                },
+                xAxis: {
+                    categories: Highcharts.getOptions().lang.shortMonths
+                },
+                yAxis: {
+                    title: {
+                        text: null
+                    }
+                },
+                series: [{
+                    name: 'Séances',
+                    data: data
+                }]
+            });
+
+        });
+
+
+        // GRAPH POUR WELCOME
+
+        // RÉPARTITION DES SÉANCES PAR MOIS
+
+
+        $.getJSON($('#graph-categorie-per-best-actor').data('url'), function (data) {
+
+            $('#graph-categorie-per-best-actor').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: null
+                },
+                xAxis: {
+                    categories: data.categories
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Total fruit consumption'
+                    },
+                    stackLabels: {
+                        enabled: true,
+                        style: {
+                            fontWeight: 'bold',
+                            color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                        }
+                    }
+                },
+                legend: {
+                    align: 'right',
+                    x: -30,
+                    verticalAlign: 'top',
+                    y: 25,
+                    floating: true,
+                    backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                    borderColor: '#CCC',
+                    borderWidth: 1,
+                    shadow: false
+                },
+                tooltip: {
+                    headerFormat: '<b>{point.x}</b><br/>',
+                    pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                },
+                plotOptions: {
+                    column: {
+                        stacking: 'normal',
+                        dataLabels: {
+                            enabled: true,
+                            color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                            style: {
+                                textShadow: '0 0 3px black'
+                            }
+                        }
+                    }
+                },
+                series: data.series
+            });
+
+        });
 
 
 
 
 
+
+
+//-------------------------------------------------------------------------------------------------
+//              TCHAT
+//-------------------------------------------------------------------------------------------------
+
+        $(".chat-controls-input .form-control").autosize();
+
+
+//-------------------------------------------------------------------------------------------------
+//              Modifier COMMENTAIRE
+//-------------------------------------------------------------------------------------------------
+
+
+            $('.update-comments').editable({
+                type: 'text',
+                name: 'content',
+                title: 'comments',
+                params: { _token : $('.update-comments').data('token')}
+            });
+
+
+//-------------------------------------------------------------------------------------------------
+//              Modifier categorie film
+//-------------------------------------------------------------------------------------------------
+
+
+
+
+        $.getJSON($('.update-movies-categorie').data('donnee'), function (data) {
+
+                $('.update-movies-categorie').editable({
+                source: data,
+                params: {_token: $('.update-movies-categorie').data('token')},
+                select2: {
+                width: 200,
+                placeholder: 'Select country',
+                allowClear: true
+                }
+            });
+
+        });
+
+//-------------------------------------------------------------------------------------------------
+//              Modifier acteur film
+//-------------------------------------------------------------------------------------------------
+
+
+        $.getJSON($('.update-movies-actors').data('donnee'), function (data) {
+
+            var tab = [];
+            for ( var i = 0 ; i < data.length ; i++ ) {
+                //console.log(data[i]['fullname']);
+                tab.push(data[i]['fullname']);
+            }
+
+            console.log(tab);
+
+
+                $('.update-movies-actors').editable({
+                    params: {_token: $('.update-movies-actors').data('token')},
+                    select2: {
+                    tags: tab,
+                    tokenSeparators: [",", " "]
+                }
+            });
+
+        });
 
 // fin
 
@@ -450,7 +684,33 @@ $(document).ready(function(){
     });
 
 
+//--------------------------------------------------------------------------------------------------------
+//           MOVIES LIKED / DISLIKED
+//--------------------------------------------------------------------------------------------------------
 
+
+    $('a.moviesLiked, a.commentsLiked ').click(function (e) {
+        e.preventDefault();     // --> annule l'évenement href de mes liens
+        console.log('vous avez cliquez dessus.');
+
+        // Je récupère le lien sur lequel j'ai cliqué
+        var elt = $(this);
+
+        // Module Ajax
+        $.ajax({
+            url: elt.attr('href')   // Url de mon href du lien sur lequel j'ai cliqué
+        }).done(function () {
+            if (elt.find('i').hasClass('fa fa-heart-o fa-2x')){
+                elt.find('i').attr('class','fa fa-heart fa-2x');
+            } else {
+                elt.find('i').attr('class', 'fa fa-heart-o fa-2x');
+            }
+
+
+        });
+
+
+    });
 
 
 });

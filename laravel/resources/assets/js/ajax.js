@@ -194,7 +194,33 @@ $(document).ready(function(){
     });
 
 
+//--------------------------------------------------------------------------------------------------------
+//           MOVIES LIKED / DISLIKED
+//--------------------------------------------------------------------------------------------------------
 
+
+    $('a.moviesLiked, a.commentsLiked ').click(function (e) {
+        e.preventDefault();     // --> annule l'évenement href de mes liens
+        console.log('vous avez cliquez dessus.');
+
+        // Je récupère le lien sur lequel j'ai cliqué
+        var elt = $(this);
+
+        // Module Ajax
+        $.ajax({
+            url: elt.attr('href')   // Url de mon href du lien sur lequel j'ai cliqué
+        }).done(function () {
+            if (elt.find('i').hasClass('fa fa-heart-o fa-2x')){
+                elt.find('i').attr('class','fa fa-heart fa-2x');
+            } else {
+                elt.find('i').attr('class', 'fa fa-heart-o fa-2x');
+            }
+
+
+        });
+
+
+    });
 
 
 });

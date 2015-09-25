@@ -36,7 +36,7 @@ class Movies extends Model {
     public function actors()
     {
 
-        return $this->hasMany('App\Model\Actors');
+        return $this->belongsToMany('App\Model\Actors');
     }
 
     public function directors()

@@ -96,4 +96,48 @@ class CommentsController extends Controller
 
     }
 
+
+
+//------------------------------------------------------------------------------------------------------------
+//              SESSIONS - COMMENTSLIKED
+//------------------------------------------------------------------------------------------------------------
+
+    public function commentsLiked($id)
+    {
+        $a = session('commentsLiked', []);
+
+        if (!in_array($id, $a)) {
+            Session::push('commentsLiked', $id);
+        } else {
+            $position = array_search($id, session('commentsLiked'));
+            unset($a[$position]);
+            Session::put('commentsLiked', $a);
+        }
+
+
+        return Redirect::route('comments.index');
+    }
+
+
+
+
+//------------------------------------------------------------------------------------------------------------
+//              CONTENT UPDATE
+//------------------------------------------------------------------------------------------------------------
+
+
+    public function postContent(Request $request, $id)
+    {
+
+        $comment = Comments::find($id);
+
+        $comment->content = $request->input('value');
+
+        $comment->save();
+
+        dump($request->input());
+
+        return 'ok';
+    }
+
 }

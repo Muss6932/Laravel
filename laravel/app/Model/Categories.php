@@ -22,7 +22,10 @@ class Categories extends Model {
 
 
 
+    public function scopeCategoriesTitle($query) {
 
+        return $query->select('id','title')->get();
+    }
 
 
 

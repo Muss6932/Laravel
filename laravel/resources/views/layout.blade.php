@@ -43,7 +43,6 @@
 <body class="theme-default main-menu-animated">
 
 <script>var init = [];</script>
-<!-- Demo script --> <script src="assets/demo/demo.js"></script> <!-- / Demo script -->
 
 <div id="main-wrapper">
 
@@ -374,7 +373,6 @@
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/pixel-admin.min.js')}}"></script>
 <script src="{{asset('js/all.js')}}"></script>
-<script src="{{asset('js/ajax.js')}}"></script>
 
 <script type="text/javascript">
     init.push(function () {

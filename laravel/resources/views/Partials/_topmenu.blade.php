@@ -98,7 +98,9 @@
                         -->
                         <li class="nav-icon-btn nav-icon-btn-danger dropdown">
                             <a href="#notifications" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="label">5</span>
+                                <span class="label">
+                                    {{ \App\Model\Notifications::all()->count() }}
+                                </span>
                                 <i class="nav-icon fa fa-bullhorn"></i>
                                 <span class="small-screen-text">Notifications</span>
                             </a>
@@ -116,40 +118,23 @@
                             <div class="dropdown-menu widget-notifications no-padding" style="width: 300px">
                                 <div class="notifications-list" id="main-navbar-notifications">
 
+                                    @forelse ( \App\Model\Notifications::orderBy('created_at','desc')->take(10)->get() as $notif)
                                     <div class="notification">
-                                        <div class="notification-title text-danger">SYSTEM</div>
-                                        <div class="notification-description"><strong>Error 500</strong>: Syntax error in index.php at line <strong>461</strong>.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-hdd-o bg-danger"></div>
-                                    </div> <!-- / .notification -->
+                                        @if($notif->category)
+                                            <div class="notification-title text-{{ $notif->criticity or 'info' }}">CATÉGORIE : {{ $notif->category['title'] }}</div>
+                                            <div class="notification-description">{{ $notif->message }} .</div>
+                                        @elseif($notif->movie)
+                                            <div class="notification-title text-{{ $notif->criticity or 'info' }}">FILM : {{ $notif->movie['title'] }}</div>
+                                            <div class="notification-description">{{ $notif->message }} .
+                                            </div>
 
-                                    <div class="notification">
-                                        <div class="notification-title text-info">STORE</div>
-                                        <div class="notification-description">You have <strong>9</strong> new orders.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-truck bg-info"></div>
+                                        @endif
+                                        <div class="notification-ago">{{ \Carbon\Carbon::createFromTimestamp(strtotime($notif->created_at))->diffForHumans() }}</div>
+                                        <div class="notification-icon fa fa-hdd-o bg-{{ $notif->criticity or 'info' }}"></div>
                                     </div> <!-- / .notification -->
+                                    @empty
+                                    @endforelse
 
-                                    <div class="notification">
-                                        <div class="notification-title text-default">CRON DAEMON</div>
-                                        <div class="notification-description">Job <strong>"Clean DB"</strong> has been completed.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-clock-o bg-default"></div>
-                                    </div> <!-- / .notification -->
-
-                                    <div class="notification">
-                                        <div class="notification-title text-success">SYSTEM</div>
-                                        <div class="notification-description">Server <strong>up</strong>.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-hdd-o bg-success"></div>
-                                    </div> <!-- / .notification -->
-
-                                    <div class="notification">
-                                        <div class="notification-title text-warning">SYSTEM</div>
-                                        <div class="notification-description"><strong>Warning</strong>: Processor load <strong>92%</strong>.</div>
-                                        <div class="notification-ago">12h ago</div>
-                                        <div class="notification-icon fa fa-hdd-o bg-warning"></div>
-                                    </div> <!-- / .notification -->
 
                                 </div> <!-- / .notifications-list -->
                                 <a href="#" class="notifications-link">MORE NOTIFICATIONS</a>
@@ -157,7 +142,9 @@
                         </li>
                         <li class="nav-icon-btn nav-icon-btn-success dropdown">
                             <a href="#messages" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="label">10</span>
+                                <span class="label">
+                                    {{ count(session('moviesLiked')) }}
+                                </span>
                                 <i class="nav-icon fa fa-envelope"></i>
                                 <span class="small-screen-text">Income messages</span>
                             </a>
@@ -175,6 +162,7 @@
                             <div class="dropdown-menu widget-messages-alt no-padding" style="width: 300px;">
                                 <div class="messages-list" id="main-navbar-messages">
 
+                                    @foreach ( session('moviesLiked', []) as $id)
                                     <div class="message">
                                         <img src="" alt="" class="message-avatar">
                                         <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
@@ -184,96 +172,7 @@
                                             2h ago
                                         </div>
                                     </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Michelle Bortz</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Timothy Owens</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Denise Steiner</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Robert Jang</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Robert Jang</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Michelle Bortz</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Timothy Owens</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Denise Steiner</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
-
-                                    <div class="message">
-                                        <img src="" alt="" class="message-avatar">
-                                        <a href="#" class="message-subject">Lorem ipsum dolor sit amet.</a>
-                                        <div class="message-description">
-                                            from <a href="#">Robert Jang</a>
-                                            &nbsp;&nbsp;·&nbsp;&nbsp;
-                                            2h ago
-                                        </div>
-                                    </div> <!-- / .message -->
+                                    @endforeach
 
                                 </div> <!-- / .messages-list -->
                                 <a href="#" class="messages-link">MORE MESSAGES</a>

@@ -71,6 +71,7 @@
                         <thead>
                         <tr>
                             <th style="width: 1rem">#</th>
+                            <th style="width: 1rem">Favoris</th>
                             <th>Contenu</th>
                             <th style="width: 25rem">Film</th>
                             <th style="width: 12rem">Utilisateur</th>
@@ -90,14 +91,35 @@
                                 <tr class="warning">
                             @elseif( $comment->state == 0 )
                                 <tr class="danger">
-                                    @endif
+                            @endif
                                     <td>
                                         <label for="selectComments{{ $comment->id }}">{{ $comment->id }}</label>
                                         <input data-url="{{ route('comments.delete', [ 'id' => $comment->id ]) }}" type="checkbox" value="{{$comment->id}}"
                                                id="selectComments{{ $comment->id }}"
                                                name="selectComments[]">
                                     </td>
-                                    <td>{{ $comment->content }}</td>
+                                    <td>
+                                        <a class="commentsLiked"
+                                           href="{{ route('comments.commentsLiked', [ 'id' => $comment->id ]) }}">
+                                            @if(in_array($comment->id, session('commentsLiked', [])))
+                                                <i class="fa fa-heart fa-2x"></i>
+                                            @else
+                                                <i class="fa fa-heart-o fa-2x"></i>
+                                            @endif
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="#" data-type="text" data-pk="1"
+                                           data-name="content"
+                                           data-title="Modifier commentaire"
+                                           data-url="{{ route('comments.contentUpdate',[ 'id' => $comment->id ]) }}"
+                                           data-token="{{ csrf_token() }}"
+                                           class="update-comments"
+                                           data-original-title="" title="">
+                                            {{ $comment->content }}
+                                        </a>
+
+                                    </td>
                                     <td>
                                         <a style="width: 100%" class="btn btn-info"
                                            href="{{ route('movies.read', [ 'id' => $comment->movies->id ] ) }}">

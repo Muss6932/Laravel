@@ -20,6 +20,9 @@ Route::group([  'prefix' => 'admin',
                 'middleware' => 'auth'], function () {
 
 
+
+Route::controller('api', 'ApiController');
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -49,12 +52,20 @@ Route::group([  'prefix' => 'admin',
 Route::get('/', [   'uses' => 'PagesController@welcome',
                     'as'   => 'welcome']);
 
+/*
+| Route pour la page 'postmessage'
+*/
+Route::post('message-create', [   'uses' => 'PagesController@createMessage',
+                                   'as'   => 'message.create']);
+
+
 
 /*
 | Route pour la page 'welcome advanced'
 */
 Route::get('/advanced', [ 'uses' => 'PagesController@welcomeAdvanced',
                             'as' => 'welcome.advanced']);
+
 
 /*
 | Route pour la page 'welcome advanced'
@@ -132,6 +143,7 @@ Route::get('/search', ['uses' => 'PagesController@search', 'as' => 'search']);
 */
 
 Route::group(['prefix' => 'actors', 'as' => 'actors'], function() {
+
     /*
     | Route pour la page 'Index'
     */
@@ -170,6 +182,7 @@ Route::group(['prefix' => 'actors', 'as' => 'actors'], function() {
     Route::get('/delete/{id}', ['uses' => 'ActorsController@delete',
                                 'as'   => '.delete'])
     ->where('id', '[0-9]+');
+
 });
 
 /*
@@ -297,11 +310,31 @@ Route::group(['prefix' => 'movies'], function() {
     | Route pour 'Restore'
     */
     Route::get('/restore/{id}', ['uses' => 'MoviesController@restore',
-                              'as' => 'movies.restore']);
+                                   'as' => 'movies.restore']);
 
     Route::post('/comments/{id}', ['uses' => 'MoviesController@comment',
-        'as' => 'movies.comments'])
+                                     'as' => 'movies.comments'])
         ->where('id', '[0-9]+');
+
+    /*
+    | Route pour 'MoviesLiked'
+    */
+    Route::get('/session/{id}', ['uses' => 'MoviesController@moviesLiked',
+                                   'as' => 'movies.moviesLiked']);
+
+
+    /*
+    | Route pour 'Categorie Update'
+    */
+    Route::post('/categorieupdate/{id}', ['uses' => 'MoviesController@categorieUpdate',
+                                            'as' => 'movies.categorieUpdate']);
+
+    /*
+    | Route pour 'Actors Update'
+    */
+    Route::post('/actorsupdate/{id}', ['uses' => 'MoviesController@actorsUpdate',
+                                         'as' => 'movies.actorsUpdate']);
+
 
 
 });
@@ -380,7 +413,15 @@ Route::controller('cinemas', 'CinemasController', [ 'getIndex'  => 'cinemas.inde
 
 Route::controller('comments', 'CommentsController', [   'getIndex'      => 'comments.index',
                                                         'getDelete'     => 'comments.delete',
-                                                        'getSelect'     => 'comments.select']);
+                                                        'getSelect'     => 'comments.select',
+                                                        'postContent'   => 'comments.contentUpdate'
+]);
+
+/*
+| Route pour 'CommentsLiked'
+*/
+Route::get('/session/{id}', ['uses' => 'CommentsController@commentsLiked',
+                               'as' => 'comments.commentsLiked']);
 
 
 

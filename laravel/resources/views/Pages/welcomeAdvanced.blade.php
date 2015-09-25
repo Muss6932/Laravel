@@ -253,6 +253,25 @@
 
 
 
+    {{--//Exemple api json ect--}}
+
+    <script>
+        init.push(function () {
+
+            $.getJSON( $('#hero-areaza').data('url'), function (data) {
+                var items = [];
+
+                $.each( data, function( key, value ) {
+                    items.push(value.firstname );
+                });
+                console.log(items);
+            });
+        })
+    </script>
+
+    <div class="graph-container">
+        <div data-url="{{ url('admin/api/best-directors') }}" id="hero-areaza"></div>
+    </div>
 
 
 

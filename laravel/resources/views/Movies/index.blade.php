@@ -207,19 +207,20 @@
                             @endif
                             <th class="sorting_asc" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
                                 colspan="1" aria-sort="ascending"
-                                aria-label="Rendering engine: activate to sort column ascending" style="width: 15%;">
+                                aria-label="Rendering engine: activate to sort column ascending" style="width: 10%;">
                                 Film
                             </th>
-                            <th style="width: 15%;">Catégorie
-                            </th>
+                            <th style="width: 4%;">Catégorie</th>
+                            <th style="width: 8%;">Acteurs</th>
                             <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
                                 colspan="1" aria-label="Browser: activate to sort column ascending"
-                                style="width: 80px;">Synopsis
+                                style="width: 15%;">Synopsis
                             </th>
                             <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1"
                                 colspan="1" aria-label="Browser: activate to sort column ascending"
                                 style="width: 8%;">Année
                             </th>
+                            <th style="width: 2%;"></th>
                             <th style="width: 10%;"></th>
                         </tr>
                         </thead>
@@ -229,7 +230,10 @@
                             <tr class="gradeA odd">
                                 <td>
                                     <label for="selectFilm{{ $movie->id }}">{{ $movie->id }} </label>
-                                    <input type="checkbox" value="{{$movie->id}}" id="selectFilm{{ $movie->id }}" name="selectFilm[]">
+                                    <input type="checkbox" value="{{$movie->id}}" id="selectFilm{{ $movie->id }}" name="selectFilm[]"></br>
+
+
+
                                 </td>
                                 <td><a href="{{ route('movies.read', [ 'id' => $movie->id ] ) }}"><img
                                                 style="width: 100%" src="{{ $movie->image }}" alt=""></a></td>
@@ -268,9 +272,43 @@
                                 <td  style="font-weight: bold; color: #090E0F"><a
                                             href="{{ route('movies.read', [ 'id' => $movie->id ] ) }}">{{ $movie->title }}</a>
                                 </td>
-                                <td><i>{{ $movie->categories->title }}</i> </td>
+                                <td>
+                                    <a href="#"
+                                       data-donnee="{{ url('admin/api/categories-title') }}"
+                                       data-type="select2"
+                                       data-pk="1"
+                                       data-url="{{ route('movies.categorieUpdate',[ 'id' => $movie->id ]) }}"
+                                       data-token="{{ csrf_token() }}"
+                                       data-value="{{ $movie->categories->title }}"
+                                       data-title="Modifier la catégorie"
+                                       class="update-movies-categorie editable editable-click editable-open" data-original-title="" title="">
+                                        <i>{{ $movie->categories->title }}</i>
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="#" data-type="select2" data-pk="1"
+                                       data-donnee="{{ url('admin/api/actors-name') }}"
+                                       data-url="{{ route('movies.actorsUpdate',[ 'id' => $movie->id ]) }}"
+                                       data-token="{{ csrf_token() }}"
+                                       data-title="Ajouter/supprimer acteur"
+                                       class="update-movies-actors editable editable-click editable-unsaved editable-open"
+                                       data-original-title="" title="">
+                                    @foreach ( $movie->actors as $actor)
+                                        {{ $actor->firstname . " " . $actor->lastname }},
+                                    @endforeach
+                                    </a>
+                                </td>
                                 <td>{{\Illuminate\Support\Str::limit($movie->synopsis, 100) }}</td>
                                 <td>{{$movie->annee}}</td>
+                                <td>
+                                    <a class="moviesLiked" href="{{ route('movies.moviesLiked', [ 'id' => $movie->id ]) }}">
+                                        @if(in_array($movie->id, session('moviesLiked', [])))
+                                            <i style="color: #D63838;" class="fa fa-heart fa-2x"></i>
+                                        @else
+                                            <i style="color: #D63838;" class="fa fa-heart-o fa-2x"></i>
+                                        @endif
+                                    </a>
+                                </td>
                                 <td>
 
                                     @if(Route::current()->getName() == 'movies.trash' )
@@ -287,6 +325,7 @@
                                                 data-target="#myModal">
                                             <i class="fa fa-trash-o"></i>&nbsp;&nbsp;Supprimer
                                         </button>
+
 
                                         <!-- Modal pour suppression unique-->
                                         <div class="modal modal-alert modal-danger fade" id="myModal" tabindex="-1"

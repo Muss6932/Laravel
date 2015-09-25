@@ -170,9 +170,9 @@ $(document).ready(function(){
 
     $('bestcinema').each(function() {
         var cinema = {
-            name: $(this).attr('data-cinema'),
-            y: parseInt($(this).attr('data-countcomments')) * 100 / sumcomments,
-            drilldown: $(this).attr('data-cinema')
+            name: $(this).data('cinema'),
+            y: parseInt($(this).data('countcomments')) * 100 / sumcomments,
+            drilldown: $(this).data('cinema')
         }
 
         bestcinema.push(cinema);
@@ -410,7 +410,7 @@ $(document).ready(function(){
             type: 'pie'
         },
         title: {
-            text: ' '
+            text: null
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

@@ -8,6 +8,9 @@
     @parent
 
     <script src="{{asset('js/realtime.js')}}"></script>
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="http://code.highcharts.com/highcharts-3d.js"></script>
 
 @endsection
 
@@ -258,16 +261,86 @@
         </div>
 
 
+        <div class="col-sm-6">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Répartition des films par catégories</span>
+                </div>
+                <div class="panel-body">
+                    <div data-url="{{ url('admin/api/movies-per-category') }}" id="graph-film-categorie-index"></div>
+                </div>
+            </div>
+        </div>
 
 
+        <div class="col-sm-6">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Répartition des séances par mois</span>
+                </div>
+                <div class="panel-body">
+                    <div data-url="{{ url('admin/api/sessions-per-month') }}" id="graph-sessions-per-month"></div>
+                </div>
+            </div>
+        </div>
 
-
-
-
-
-
-
+        <div class="col-sm-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <span class="panel-title">Répartition des catégories pour les 5 meilleurs acteurs</span>
+                </div>
+                <div class="panel-body">
+                    <div data-url="{{ url('admin/api/categorie-per-best-actor') }}" id="graph-categorie-per-best-actor"></div>
+                </div>
+            </div>
+        </div>
     </div>{{--Fin Row--}}
+
+
+
+{{----------------------------------------TCHAT-----------------------------------------------------------------}}
+
+    <div class="panel widget-chat">
+        <div class="panel-heading">
+            <span class="panel-title"><i class="panel-title-icon fa fa-comments-o"></i>Chat</span>
+        </div>
+        <!-- / .panel-heading -->
+        <div class="panel-body">
+
+            @foreach($messages as $message)
+            <div class="message">
+                <img src="" alt="" class="message-avatar">
+
+                <div class="message-body">
+                    <div class="message-heading">
+                        <a href="#" title="">{{ $message['user']['name'] . ' ' . $message['user']['firstname'] }}</a> says:
+                        <span class="pull-right">
+                            {{ \Carbon\Carbon::createFromTimestamp(strtotime($message->created_at))->diffForHumans() }}
+                        </span>
+                    </div>
+                    <div class="message-text">
+                        {{ $message['content'] }}
+                    </div>
+                </div>
+                <!-- / .message-body -->
+            </div>
+            <!-- / .message -->
+            @endforeach
+
+
+        </div>
+        <!-- / .panel-body -->
+        <form method="post" action="{{ route('message.create') }}" class="panel-footer chat-controls">
+            {{ csrf_field() }}
+            <div class="chat-controls-input">
+                <textarea name='content' rows="1" class="form-control"
+                          style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 32px;"></textarea>
+            </div>
+            <button class="btn btn-primary chat-controls-btn">Écrire</button>
+        </form>
+        <!-- / .panel-footer -->
+    </div>
+
 
 
 

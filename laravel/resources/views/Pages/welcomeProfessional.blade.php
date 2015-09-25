@@ -32,21 +32,24 @@
     <div class="row">
 
 
-        @foreach($bestcats as $bestcat)
-            <bestcat data-title="{{ $bestcat->title }}" data-id="{{ $bestcat->categories_id }}"
-                     data-janvier="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 1))->sum('movies.budget') }}"
-                     data-fevrier="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 2))->sum('movies.budget') }}"
-                     data-mars="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 3))->sum('movies.budget') }}"
-                     data-avril="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 4))->sum('movies.budget') }}"
-                     data-mai="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 5))->sum('movies.budget') }}"
-                     data-juin="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 6))->sum('movies.budget') }}"
-                     data-juillet="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 7))->sum('movies.budget') }}"
-                     data-aout="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 8))->sum('movies.budget') }}"
-                     data-septembre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 9))->sum('movies.budget') }}"
-                     data-octobre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 10))->sum('movies.budget') }}"
-                     data-novembre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 11))->sum('movies.budget') }}"
-                     data-decembre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 12))->sum('movies.budget') }}"></bestcat>
-        @endforeach
+        <div style="display: none">
+            @foreach($bestcats as $bestcat)
+                <bestcat data-title="{{ $bestcat->title }}" data-id="{{ $bestcat->categories_id }}"
+                         data-janvier="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 1))->sum('movies.budget') }}"
+                         data-fevrier="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 2))->sum('movies.budget') }}"
+                         data-mars="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 3))->sum('movies.budget') }}"
+                         data-avril="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 4))->sum('movies.budget') }}"
+                         data-mai="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 5))->sum('movies.budget') }}"
+                         data-juin="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 6))->sum('movies.budget') }}"
+                         data-juillet="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 7))->sum('movies.budget') }}"
+                         data-aout="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 8))->sum('movies.budget') }}"
+                         data-septembre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 9))->sum('movies.budget') }}"
+                         data-octobre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 10))->sum('movies.budget') }}"
+                         data-novembre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 11))->sum('movies.budget') }}"
+                         data-decembre="{{ \App\Model\Movies::Bestcat($bestcat->categories_id, sprintf("%02d", 12))->sum('movies.budget') }}"></bestcat>
+            @endforeach
+        </div>
+
 
         <div class="col-sm-6">
             <div class="panel">
@@ -76,6 +79,8 @@
         </div>
 
 
+        <div style="display: none">
+
         @foreach ( $bestcinema as $cinema)
         <bestcinema data-cinema="{{ $cinema->title }}" data-countcomments="{{ $cinema->nbcomments }}"></bestcinema>
         @endforeach
@@ -90,6 +95,7 @@
             @endforeach
         @endforeach
 
+        </div>
 {{------------------------==================================================--------------------------}}
 {{------------------------==================================================--------------------------}}
 

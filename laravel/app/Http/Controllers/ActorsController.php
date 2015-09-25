@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Http\Requests\ActorsRequest;
 use App\Model\Actors;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -13,6 +15,12 @@ use Illuminate\Support\Facades\Session;
 class ActorsController extends Controller
 {
 
+    public function __construct() {
+        if (Gate::denies('date_expired')) {
+            abort(403);
+        }
+
+    }
 
     public function index(){
         $datas = [
@@ -45,6 +53,12 @@ class ActorsController extends Controller
     public function delete($id){
         // Je supprime un acteur
         $actor = Actors::find($id);
+
+        if (Gate::denies('hasactor', $actor)) {
+            abort(403);
+        }
+
+
         $actor->delete();
 
         // J'écris en session un message Flash
@@ -73,6 +87,7 @@ class ActorsController extends Controller
         $actor->roles           = $request->roles;
         $actor->recompenses     = $request->recompenses;
         $actor->biography       = $request->biography;
+        $actor->administrators_id = Auth::user()->id;
 
         //------------------------------------------------
         // Pour les images :

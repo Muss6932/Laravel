@@ -7,7 +7,9 @@ use App\Model\Categories;
 use App\Model\Comments;
 use App\Model\Directors;
 use App\Model\Movies;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -23,6 +25,13 @@ class MoviesController extends Controller
 
 
     public function index($column = null, $value = null){
+
+
+        if (Gate::denies('superadmin')){
+            abort(403);
+        }
+
+
 
         if ($column == null && $value == null) {
             $movies =  Movies::all();
@@ -87,6 +96,13 @@ class MoviesController extends Controller
 
     public function delete($id){
         $movie = Movies::find($id);
+
+
+        if(Gate::denies('hasmovie', $movie)) {
+            abort(403);
+        }
+
+
         $movie->delete();
 
         Session::flash('success', "Le film {$movie->title} a bien été supprimé. ");
@@ -146,6 +162,12 @@ class MoviesController extends Controller
             if ($submit == 'supprimer') {
                 foreach ($movies as $id) {
                     $movie = Movies::find($id);
+
+                    if (Gate::denies('hasmovie', $movie)) {
+                        abort(403);
+                    }
+
+
                     $movie->delete();
                 }
                 Session::flash('success', "Les films ont bien été supprimé. ");
@@ -272,6 +294,7 @@ class MoviesController extends Controller
         $movie->categories_id   = $request->categories;
         $movie->visible         = $request->visible;
         $movie->cover           = $request->cover;
+        $movie->administrators_id = Auth::user()->id;
 
         //------------------------------------------------
         // Pour les images :
@@ -389,5 +412,66 @@ class MoviesController extends Controller
 
         return Redirect::route( 'movies.read', ['id'=> $id] );
     }
+
+
+
+//------------------------------------------------------------------------------------------------------------
+//              SESSIONS - MOVIESLIKED
+//------------------------------------------------------------------------------------------------------------
+
+    public function moviesLiked($id)
+    {
+        $a = session('moviesLiked', []);
+
+        if(!in_array($id, $a)){
+            Session::push('moviesLiked', $id);
+        } else {
+            $position = array_search($id, session('moviesLiked'));
+            unset($a[$position]);
+            Session::put('moviesLiked', $a);
+        }
+
+
+        return Redirect::route('movies.index');
+    }
+
+
+
+//------------------------------------------------------------------------------------------------------------
+//             UPDATE CATEGORIE
+//------------------------------------------------------------------------------------------------------------
+
+
+    public function categorieUpdate(Request $request, $id)
+    {
+
+        $movie = Movies::find($id);
+
+        $movie->categories_id = $request->input('value');
+
+        $movie->save();
+    }
+
+
+
+//------------------------------------------------------------------------------------------------------------
+//             UPDATE ACTORS
+//------------------------------------------------------------------------------------------------------------
+
+
+    public function actorsUpdate(Request $request, $id)
+    {
+        $movie = Movies::find($id);
+
+        return 'ok';
+
+
+
+//
+//        $movie->categories_id = $request->input('value');
+//
+//        $movie->save();
+    }
+
 
 }

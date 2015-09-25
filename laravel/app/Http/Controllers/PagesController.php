@@ -6,11 +6,13 @@ use App\Model\Categories;
 use App\Model\Cinema;
 use App\Model\Comments;
 use App\Model\Directors;
+use App\Model\Messages;
 use App\Model\Movies;
 use App\Model\Recommandations;
 use App\Model\Tasks;
 use App\Model\Users;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -24,13 +26,30 @@ use Illuminate\Support\Facades\Validator;
 class PagesController extends Controller
 {
 
+    protected function messages(){
+
+//     MONGO - si la connection avec la base de donnée de Mongo n'a pas été faite
+//        $m = new \MongoClient();        // connexion
+//        $db = $m->selectDB('laravel');  // choix de la base de donnée
+//        $collection = new \MongoCollection($db, 'messages');    // choix de la collection
+//
+//        $find = array();
+//
+//        $messages = $collection->find($find);
+
+        // SIOUI :
+        $messages = Messages::all();
+
+        return $messages;
+    }
+
     public function datas(){
 
 
         // MONGO
-//        $m = new \MongoClient();        // connexion
-//        $db = $m->selectDB('laravel');  // choix de la base de donnée
-//        $collection = new \MongoCollection($db, 'unicorns');    // choix de la collection
+//        $m = new \MongoClient();                               // connexion
+//        $db = $m->selectDB('laravel');                         // choix de la base de donnée
+//        $collection = new \MongoCollection($db, 'unicorns');   // choix de la collection
 //
 //        // recherche des fruits
 //        $find = array('name' => 'Horny');
@@ -44,6 +63,9 @@ class PagesController extends Controller
 //        exit();
 
 
+
+
+
         $datas = [
             'ageMoyen' => $this->ageMoyen()[0],
             'lyon' => $this->city('lyon'),
@@ -55,6 +77,7 @@ class PagesController extends Controller
             'tauxFilmsDiffuses' => $this->tauxFilmsDiffuses(),
             'categories' => $this->categories(),
             'seanceavenir' => $this->seanceAVenir(),
+            'messages' => $this->messages()
 
         ];
 
@@ -69,7 +92,15 @@ class PagesController extends Controller
     }
 
 
+    public function createMessage(Request $request) {
 
+        $message = new Messages();
+        $message->user = Auth::user()->toArray();      // OBLIGER DE LE CONVERTIR EN TABLEAU !!
+        $message->content = $request->input('content');
+        $message->save();
+
+        return $message;
+    }
 
 
 
@@ -255,6 +286,7 @@ class PagesController extends Controller
 
     public function welcomeAdvanced()
     {
+
         $datas = [
             'cinemas'           => Cinema::all(),
             'recommandations'   => Recommandations::all(),
@@ -266,6 +298,7 @@ class PagesController extends Controller
         ];
 
         return view('Pages/welcomeAdvanced', $datas);
+
     }
 
 
@@ -477,10 +510,6 @@ class PagesController extends Controller
 
 
 // -------------------- REPARTITION DES FILMS PAR CATEGORIES
-
-
-
-
 
 
 
