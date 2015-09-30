@@ -3,6 +3,8 @@
 
 /*========================================================================*/
 
+
+
 /**
  * Routes implicites vers mes controlleurs préconcues car ces controlleurs use
  * traits avec les fonctionnalités de l'authentification déjà faite
@@ -35,6 +37,13 @@ Route::controller('api', 'ApiController');
 */
 
 
+/*
+|--------------------------------------------------------------------------
+| Route pour la barre de recherche 'Twitter'
+|--------------------------------------------------------------------------
+*/
+Route::post('search-tweet', ['uses' => 'PagesController@searchTweet',
+                               'as' => 'search.tweet']);
 
 
 
@@ -67,8 +76,10 @@ Route::get('/advanced', [ 'uses' => 'PagesController@welcomeAdvanced',
                             'as' => 'welcome.advanced']);
 
 
+
+
 /*
-| Route pour la page 'welcome advanced'
+| Route pour la page 'welcome professionnal'
 */
 Route::get('/professional', ['uses' => 'PagesController@welcomeProfessional',
     'as' => 'welcome.professional']);

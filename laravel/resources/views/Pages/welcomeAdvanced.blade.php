@@ -247,6 +247,126 @@
             @endforeach
         @endforeach
 
+
+        <div class="row">
+
+            <div class="panel widget-threads">
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title">Tweets</span>
+                        </div>
+                        <div class="panel-body">
+                            @foreach( $mentions as $mention)
+                                <div class="thread">
+                                    <img src="{{ $mention->user->profile_image_url }}" alt="" class="thread-avatar">
+
+                                    <div class="thread-body">
+                                        <span class="thread-time">
+                                            {{--On utilise la classe Twitter avec son alias (provider) pour l'avoir directement en timestamp--}}
+                                            {{--Et non celle du dump car on a une chaine de caractere de la date ;)--}}
+                                            {{ Twitter::ago($mention->created_at) }}
+                                        </span>
+
+                                        {!! $mention->source !!}
+                                        <p>
+                                            {!! Twitter::linkify($mention->text) !!}
+                                        </p>
+                                        {{--@foreach($mention->entities->hashtags as $tag)--}}
+                                            {{--<a href="">#{{  $tag->text }}</a>--}}
+                                        {{--@enforeach--}}
+
+                                        <div class="thread-info">
+                                            Commenté par
+                                            <a href="{{ Twitter::linkUser($mention->user->name) }}" title="">{{ $mention->user->name }}</a>
+                                        </div>
+                                    </div>
+                                    <!-- / .thread-body -->
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="panel">
+                        <div class="panel-heading">
+                            <span class="panel-title">Tweets</span>
+                        </div>
+                        <div class="panel-body">
+                            @foreach( $tweetallocine as $mention)
+                                <div class="thread">
+                                    <img src="{{ $mention->user->profile_image_url }}" alt="" class="thread-avatar">
+
+                                    <div class="thread-body">
+                                        <span class="thread-time">
+                                            {{--On utilise la classe Twitter avec son alias (provider) pour l'avoir directement en timestamp--}}
+                                            {{--Et non celle du dump car on a une chaine de caractere de la date ;)--}}
+                                            {{ Twitter::ago($mention->created_at) }}
+                                        </span>
+
+                                        {!! $mention->source !!}
+                                        <p>
+                                            {!! Twitter::linkify($mention->text) !!}
+                                        </p>
+                                        {{--@foreach($mention->entities->hashtags as $tag)--}}
+                                        {{--<a href="">#{{  $tag->text }}</a>--}}
+                                        {{--@enforeach--}}
+
+                                        <div class="thread-info">
+                                            Commenté par
+                                            <a href="{{ Twitter::linkUser($mention->user->name) }}"
+                                               title="">{{ $mention->user->name }}</a>
+                                        </div>
+                                    </div>
+                                    <!-- / .thread-body -->
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-sm-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        <span class="panel-title">Mes derniers messages sur twitter</span>
+                    </div>
+                    <div class="panel-body">
+                        @foreach( $messagesontwitter as $message)
+                            <div class="thread">
+                                <img src="{{ $message->sender->profile_image_url }}" alt="" class="thread-avatar">
+
+                                <div class="thread-body">
+                                    <span class="thread-time">
+                                        {{--On utilise la classe Twitter avec son alias (provider) pour l'avoir directement en timestamp--}}
+                                        {{--Et non celle du dump car on a une chaine de caractere de la date ;)--}}
+                                        {{ Twitter::ago($message->created_at) }}
+                                    </span>
+
+                                    <p>{!! Twitter::linkify($message->text) !!}</p>
+
+
+                                </div>
+                                <!-- / .thread-body -->
+                            </div>
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
         <div style="margin-bottom: 100px"> </div>
     </div>{{--FIN ROW PRINCIPALE--}}
 

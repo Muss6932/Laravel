@@ -79,6 +79,12 @@
                                     {{--utilisateur</a></li>--}}
                         </ul>
                     </li>
+                    <li>
+                        <form method="post" action="{{ route('search.tweet') }}" class="navbar-form pull-left">
+                            {{ csrf_field() }}
+                            <input type="text" class="form-control" name="searchTweet" placeholder="Search">
+                        </form>
+                    </li>
                 </ul> <!-- / .navbar-nav -->
 
                 <div class="right clearfix">

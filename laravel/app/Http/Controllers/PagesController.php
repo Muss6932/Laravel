@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Thujohn\Twitter\Facades\Twitter;
 
 
 /**
@@ -286,6 +287,24 @@ class PagesController extends Controller
 
     public function welcomeAdvanced()
     {
+        // TODO : TWITTER
+
+        $mentions = Twitter::getHomeTimeLine([
+            'count'         => 5,
+            'format'        => 'php'
+        ]);
+
+        // pour voir ce que tu recois : conseillé de faire un dump!!
+//        exit(dump($mentions));
+
+        $tweetallocine = Twitter::getUserTimeline([
+            'screen_name' => 'allocine',
+            'count' => 5,
+            'format' => 'php'
+        ]);
+
+        $mesderniersmessages = Twitter::getDmsIn();
+//        exit(dump($mesderniersmessages));
 
         $datas = [
             'cinemas'           => Cinema::all(),
@@ -295,10 +314,24 @@ class PagesController extends Controller
             'actorpercity'      => $this->actorpercity(),
             'actorAge'          => $this->actorAge(),
             'directors'         => $this->directors(),
+            'mentions'          => $mentions,
+            'tweetallocine'     => $tweetallocine,
+            'messagesontwitter' => $mesderniersmessages
         ];
 
         return view('Pages/welcomeAdvanced', $datas);
 
+    }
+
+    public function searchTweet (Request $request){
+        $search = $request->input('searchTweet');
+
+        $result = Twitter::getSearch([
+            'q'         => $search,
+            'count'     => 20
+        ]);
+
+        return dump($result);
     }
 
 
